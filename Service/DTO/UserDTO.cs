@@ -12,8 +12,9 @@ namespace Service.DTO
         public string Fname { get; set; }
         public string Username { get; set; }
         public string email { get; set; }
-        public string? password { get; set; }
+        public string? password { get; set; } //THis way of authing should in no way shape or form be allowed to persist to release. 
         public string? NewCategoryTitle { get; set; }
          
     }
+
 }
