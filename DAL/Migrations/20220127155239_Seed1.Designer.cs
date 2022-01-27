@@ -4,6 +4,7 @@ using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(EconomiqContext))]
-    partial class EconomiqContextModelSnapshot : ModelSnapshot
+    [Migration("20220127155239_Seed1")]
+    partial class Seed1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,7 +117,7 @@ namespace DAL.Migrations
                             Amount = 25f,
                             CategoryNavId = 1,
                             Comment = "Glass",
-                            ExpenseDate = new DateTime(2022, 1, 27, 16, 55, 1, 430, DateTimeKind.Local).AddTicks(4132),
+                            ExpenseDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(3174),
                             UserNavId = 1
                         });
                 });
@@ -149,7 +151,7 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             CategoryName = "Snacks",
-                            CreationDate = new DateTime(2022, 1, 27, 16, 55, 1, 430, DateTimeKind.Local).AddTicks(4116),
+                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(3118),
                             UserNavId = 1
                         });
                 });
@@ -202,7 +204,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDate = new DateTime(2022, 1, 27, 16, 55, 1, 430, DateTimeKind.Local).AddTicks(3903),
+                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(2638),
                             Fname = "Julia",
                             Lname = "Hook",
                             Password = "Testing123",
@@ -211,7 +213,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 2,
-                            CreationDate = new DateTime(2022, 1, 27, 16, 55, 1, 430, DateTimeKind.Local).AddTicks(3948),
+                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(2694),
                             Fname = "Alexander",
                             Lname = "Volonen",
                             Password = "Testing234",
@@ -220,7 +222,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 3,
-                            CreationDate = new DateTime(2022, 1, 27, 16, 55, 1, 430, DateTimeKind.Local).AddTicks(3950),
+                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(2701),
                             Fname = "Stefan",
                             Lname = "Krakowsky",
                             Password = "Testing345",
@@ -229,7 +231,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 4,
-                            CreationDate = new DateTime(2022, 1, 27, 16, 55, 1, 430, DateTimeKind.Local).AddTicks(3953),
+                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(2704),
                             Fname = "Winnie",
                             Lname = "Huynh",
                             Password = "Testing456",
@@ -238,7 +240,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 5,
-                            CreationDate = new DateTime(2022, 1, 27, 16, 55, 1, 430, DateTimeKind.Local).AddTicks(3955),
+                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(2708),
                             Fname = "Eric",
                             Lname = "Flodin",
                             Password = "Testing567",
@@ -247,7 +249,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 6,
-                            CreationDate = new DateTime(2022, 1, 27, 16, 55, 1, 430, DateTimeKind.Local).AddTicks(3958),
+                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(2711),
                             Fname = "Anders",
                             Lname = "Bergstrom",
                             Password = "Testing678",
@@ -256,7 +258,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 7,
-                            CreationDate = new DateTime(2022, 1, 27, 16, 55, 1, 430, DateTimeKind.Local).AddTicks(3960),
+                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(2715),
                             Fname = "Peter",
                             Lname = "Hafid",
                             Password = "Testing789",
