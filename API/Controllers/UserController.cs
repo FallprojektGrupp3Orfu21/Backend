@@ -27,6 +27,13 @@ namespace API.Controllers
             var Password = splitString[1];
             return Ok(); //TODO Add service to get user from DB, check that username and passwords match. Return error if not or of if no Authorization header has been provided. Should return BadRequest() in those cases, should also set UserIsLogedIn to true. otherwise should return ok. 
         }
-
+        [HttpPost("register")]
+        //public IActionResult RegisterUser(RegisterUserDTO newUser)
+        //{
+        //    if(UserService.GetUserByUserName(newUser.UserName)){return BadRequest("Username allready exists")}
+        //    Check Password Strenght. 
+        //    if(PasswordStrength())
+        //    return Ok();
+        //}
     }
 }
