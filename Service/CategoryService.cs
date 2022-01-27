@@ -13,9 +13,9 @@ namespace Service
             return new List<CategoryDTO>();
             //Returns a List of categories belonging to a certain user.
         }
-        CategoryDTO AddCategory(UserCategoryDTO UC)
+        CategoryDTO AddCategory(CategoryDTO UC)
         {
-
+            return new CategoryDTO();
         }
     }
 }
