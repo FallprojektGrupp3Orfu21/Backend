@@ -25,6 +25,6 @@ namespace DAL.Models
         public List<ExpenseCategory>? ExpensesCategoryNav { get; set;}
         //Email
         public List<Email> Emails { get; set; }
-        public bool IsLoggedIn = false;
+        public bool IsLoggedIn {get; set;}
     }
 }
