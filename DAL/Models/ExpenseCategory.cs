@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Models
 {
@@ -13,8 +15,7 @@ namespace DAL.Models
         //For Expenses
         public List<Expense>? ExpensesNav { get; set; }
         //For User
-        public int? UserNavId { get; set; }
-        public User? UserNav { get; set; }
+        public List<User>? UserNav { get; set; }
 
 
 

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(EconomiqContext))]
-    [Migration("20220127155239_Seed1")]
-    partial class Seed1
+    [Migration("20220128114828_TestingNM")]
+    partial class TestingNM
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -117,7 +117,7 @@ namespace DAL.Migrations
                             Amount = 25f,
                             CategoryNavId = 1,
                             Comment = "Glass",
-                            ExpenseDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(3174),
+                            ExpenseDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3846),
                             UserNavId = 1
                         });
                 });
@@ -137,12 +137,7 @@ namespace DAL.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserNavId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserNavId");
 
                     b.ToTable("ExpensesCategory");
 
@@ -150,9 +145,32 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            CategoryName = "Snacks",
-                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(3118),
-                            UserNavId = 1
+                            CategoryName = "Rent",
+                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3830)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryName = "Food",
+                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3832)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryName = "Transport",
+                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3833)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryName = "Clothing",
+                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3835)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryName = "Entertainment",
+                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3836)
                         });
                 });
 
@@ -184,6 +202,9 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsLoggedIn")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Lname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -204,8 +225,9 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(2638),
+                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3697),
                             Fname = "Julia",
+                            IsLoggedIn = false,
                             Lname = "Hook",
                             Password = "Testing123",
                             UserName = "JuliaH"
@@ -213,8 +235,9 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 2,
-                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(2694),
+                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3731),
                             Fname = "Alexander",
+                            IsLoggedIn = false,
                             Lname = "Volonen",
                             Password = "Testing234",
                             UserName = "AlexV"
@@ -222,8 +245,9 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 3,
-                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(2701),
+                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3733),
                             Fname = "Stefan",
+                            IsLoggedIn = false,
                             Lname = "Krakowsky",
                             Password = "Testing345",
                             UserName = "Peppo"
@@ -231,8 +255,9 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 4,
-                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(2704),
+                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3735),
                             Fname = "Winnie",
+                            IsLoggedIn = false,
                             Lname = "Huynh",
                             Password = "Testing456",
                             UserName = "WinnieH"
@@ -240,8 +265,9 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 5,
-                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(2708),
+                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3737),
                             Fname = "Eric",
+                            IsLoggedIn = false,
                             Lname = "Flodin",
                             Password = "Testing567",
                             UserName = "Ericx"
@@ -249,8 +275,9 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 6,
-                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(2711),
+                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3738),
                             Fname = "Anders",
+                            IsLoggedIn = false,
                             Lname = "Bergstrom",
                             Password = "Testing678",
                             UserName = "AndersB"
@@ -258,11 +285,204 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 7,
-                            CreationDate = new DateTime(2022, 1, 27, 16, 52, 38, 739, DateTimeKind.Local).AddTicks(2715),
+                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3740),
                             Fname = "Peter",
+                            IsLoggedIn = false,
                             Lname = "Hafid",
                             Password = "Testing789",
                             UserName = "PeterH"
+                        });
+                });
+
+            modelBuilder.Entity("ExpenseCategoryUser", b =>
+                {
+                    b.Property<int>("ExpensesCategoryNavId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserNavId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ExpensesCategoryNavId", "UserNavId");
+
+                    b.HasIndex("UserNavId");
+
+                    b.ToTable("ExpenseCategoryUser");
+
+                    b.HasData(
+                        new
+                        {
+                            ExpensesCategoryNavId = 1,
+                            UserNavId = 1
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 1,
+                            UserNavId = 2
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 1,
+                            UserNavId = 3
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 1,
+                            UserNavId = 4
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 1,
+                            UserNavId = 5
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 1,
+                            UserNavId = 6
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 1,
+                            UserNavId = 7
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 2,
+                            UserNavId = 1
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 2,
+                            UserNavId = 2
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 2,
+                            UserNavId = 3
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 2,
+                            UserNavId = 4
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 2,
+                            UserNavId = 5
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 2,
+                            UserNavId = 6
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 2,
+                            UserNavId = 7
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 3,
+                            UserNavId = 1
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 3,
+                            UserNavId = 2
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 3,
+                            UserNavId = 3
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 3,
+                            UserNavId = 4
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 3,
+                            UserNavId = 5
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 3,
+                            UserNavId = 6
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 3,
+                            UserNavId = 7
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 4,
+                            UserNavId = 1
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 4,
+                            UserNavId = 2
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 4,
+                            UserNavId = 3
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 4,
+                            UserNavId = 4
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 4,
+                            UserNavId = 5
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 4,
+                            UserNavId = 6
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 4,
+                            UserNavId = 7
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 5,
+                            UserNavId = 1
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 5,
+                            UserNavId = 2
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 5,
+                            UserNavId = 3
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 5,
+                            UserNavId = 4
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 5,
+                            UserNavId = 5
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 5,
+                            UserNavId = 6
+                        },
+                        new
+                        {
+                            ExpensesCategoryNavId = 5,
+                            UserNavId = 7
                         });
                 });
 
@@ -301,14 +521,19 @@ namespace DAL.Migrations
                     b.Navigation("UserNav");
                 });
 
-            modelBuilder.Entity("DAL.Models.ExpenseCategory", b =>
+            modelBuilder.Entity("ExpenseCategoryUser", b =>
                 {
-                    b.HasOne("DAL.Models.User", "UserNav")
-                        .WithMany("ExpensesCategoryNav")
-                        .HasForeignKey("UserNavId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                    b.HasOne("DAL.Models.ExpenseCategory", null)
+                        .WithMany()
+                        .HasForeignKey("ExpensesCategoryNavId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("UserNav");
+                    b.HasOne("DAL.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserNavId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DAL.Models.ExpenseCategory", b =>
@@ -319,8 +544,6 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Models.User", b =>
                 {
                     b.Navigation("Emails");
-
-                    b.Navigation("ExpensesCategoryNav");
 
                     b.Navigation("UserExpensesNav");
                 });

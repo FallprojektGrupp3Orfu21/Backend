@@ -5,10 +5,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class testingagain : Migration
+    public partial class TestingNM : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ExpensesCategory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExpensesCategory", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Recipients",
                 columns: table => new
@@ -31,7 +45,8 @@ namespace DAL.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Fname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Lname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsLoggedIn = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,23 +72,27 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExpensesCategory",
+                name: "ExpenseCategoryUser",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserNavId = table.Column<int>(type: "int", nullable: true)
+                    ExpensesCategoryNavId = table.Column<int>(type: "int", nullable: false),
+                    UserNavId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExpensesCategory", x => x.Id);
+                    table.PrimaryKey("PK_ExpenseCategoryUser", x => new { x.ExpensesCategoryNavId, x.UserNavId });
                     table.ForeignKey(
-                        name: "FK_ExpensesCategory_Users_UserNavId",
+                        name: "FK_ExpenseCategoryUser_ExpensesCategory_ExpensesCategoryNavId",
+                        column: x => x.ExpensesCategoryNavId,
+                        principalTable: "ExpensesCategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExpenseCategoryUser_Users_UserNavId",
                         column: x => x.UserNavId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -110,17 +129,29 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "CreationDate", "Fname", "Lname", "Password", "UserName" },
+                table: "ExpensesCategory",
+                columns: new[] { "Id", "CategoryName", "CreationDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 1, 27, 13, 1, 51, 380, DateTimeKind.Local).AddTicks(5933), "Julia", "Hook", "Testing123", "JuliaH" },
-                    { 2, new DateTime(2022, 1, 27, 13, 1, 51, 380, DateTimeKind.Local).AddTicks(5969), "Alexander", "Volonen", "Testing234", "AlexV" },
-                    { 3, new DateTime(2022, 1, 27, 13, 1, 51, 380, DateTimeKind.Local).AddTicks(5971), "Stefan", "Krakowsky", "Testing345", "Peppo" },
-                    { 4, new DateTime(2022, 1, 27, 13, 1, 51, 380, DateTimeKind.Local).AddTicks(5973), "Winnie", "Huynh", "Testing456", "WinnieH" },
-                    { 5, new DateTime(2022, 1, 27, 13, 1, 51, 380, DateTimeKind.Local).AddTicks(5976), "Eric", "Flodin", "Testing567", "Ericx" },
-                    { 6, new DateTime(2022, 1, 27, 13, 1, 51, 380, DateTimeKind.Local).AddTicks(5977), "Anders", "Bergstrom", "Testing678", "AndersB" },
-                    { 7, new DateTime(2022, 1, 27, 13, 1, 51, 380, DateTimeKind.Local).AddTicks(5979), "Peter", "Hafid", "Testing789", "PeterH" }
+                    { 1, "Rent", new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3830) },
+                    { 2, "Food", new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3832) },
+                    { 3, "Transport", new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3833) },
+                    { 4, "Clothing", new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3835) },
+                    { 5, "Entertainment", new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3836) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "CreationDate", "Fname", "IsLoggedIn", "Lname", "Password", "UserName" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3697), "Julia", false, "Hook", "Testing123", "JuliaH" },
+                    { 2, new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3731), "Alexander", false, "Volonen", "Testing234", "AlexV" },
+                    { 3, new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3733), "Stefan", false, "Krakowsky", "Testing345", "Peppo" },
+                    { 4, new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3735), "Winnie", false, "Huynh", "Testing456", "WinnieH" },
+                    { 5, new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3737), "Eric", false, "Flodin", "Testing567", "Ericx" },
+                    { 6, new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3738), "Anders", false, "Bergstrom", "Testing678", "AndersB" },
+                    { 7, new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3740), "Peter", false, "Hafid", "Testing789", "PeterH" }
                 });
 
             migrationBuilder.InsertData(
@@ -138,14 +169,56 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "ExpensesCategory",
-                columns: new[] { "Id", "CategoryName", "CreationDate", "UserNavId" },
-                values: new object[] { 1, "Snacks", new DateTime(2022, 1, 27, 13, 1, 51, 380, DateTimeKind.Local).AddTicks(6109), 1 });
+                table: "ExpenseCategoryUser",
+                columns: new[] { "ExpensesCategoryNavId", "UserNavId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 1, 2 },
+                    { 1, 3 },
+                    { 1, 4 },
+                    { 1, 5 },
+                    { 1, 6 },
+                    { 1, 7 },
+                    { 2, 1 },
+                    { 2, 2 },
+                    { 2, 3 },
+                    { 2, 4 },
+                    { 2, 5 },
+                    { 2, 6 },
+                    { 2, 7 },
+                    { 3, 1 },
+                    { 3, 2 },
+                    { 3, 3 },
+                    { 3, 4 },
+                    { 3, 5 },
+                    { 3, 6 },
+                    { 3, 7 },
+                    { 4, 1 },
+                    { 4, 2 },
+                    { 4, 3 },
+                    { 4, 4 },
+                    { 4, 5 },
+                    { 4, 6 },
+                    { 4, 7 },
+                    { 5, 1 },
+                    { 5, 2 },
+                    { 5, 3 },
+                    { 5, 4 },
+                    { 5, 5 },
+                    { 5, 6 },
+                    { 5, 7 }
+                });
 
             migrationBuilder.InsertData(
                 table: "Expenses",
                 columns: new[] { "Id", "Amount", "CategoryNavId", "Comment", "ExpenseDate", "RecipientId", "UserNavId" },
-                values: new object[] { 1, 25f, 1, "Glass", new DateTime(2022, 1, 27, 13, 1, 51, 380, DateTimeKind.Local).AddTicks(6123), null, 1 });
+                values: new object[] { 1, 25f, 1, "Glass", new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3846), null, 1 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExpenseCategoryUser_UserNavId",
+                table: "ExpenseCategoryUser",
+                column: "UserNavId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Expenses_CategoryNavId",
@@ -161,17 +234,15 @@ namespace DAL.Migrations
                 name: "IX_Expenses_UserNavId",
                 table: "Expenses",
                 column: "UserNavId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ExpensesCategory_UserNavId",
-                table: "ExpensesCategory",
-                column: "UserNavId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Email");
+
+            migrationBuilder.DropTable(
+                name: "ExpenseCategoryUser");
 
             migrationBuilder.DropTable(
                 name: "Expenses");

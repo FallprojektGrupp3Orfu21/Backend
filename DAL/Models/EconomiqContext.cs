@@ -46,10 +46,9 @@ namespace DAL.Models
                 .HasForeignKey(e => e.CategoryNavId)
                 .OnDelete(DeleteBehavior.NoAction);
             modelbuilder.Entity<ExpenseCategory>()
-                .HasOne(ec => ec.UserNav)
-                .WithMany(u => u.ExpensesCategoryNav)
-                .HasForeignKey(u=>u.UserNavId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasMany(ec => ec.UserNav)
+                .WithMany(u => u.ExpensesCategoryNav);
+                
 
 
             modelbuilder.Seed();

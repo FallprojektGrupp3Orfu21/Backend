@@ -8,14 +8,14 @@ namespace Service
 {
     public class CategoryService
     {
-        public List<CategoryDTO> GetCategories(UserDTO user)
+        public List<ExpenseCategoryDTO> GetCategories(UserDTO user)
         {
-            return new List<CategoryDTO>();
+            return new List<ExpenseCategoryDTO>();
             //Returns a List of categories belonging to a certain user.
         }
-        CategoryDTO AddCategory(CategoryDTO UC)
+        ExpenseCategoryDTO AddCategory(ExpenseCategoryDTO UC)
         {
-            return new CategoryDTO();
+            return new ExpenseCategoryDTO();
         }
     }
 }
