@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO;
+using Service.Models;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -10,10 +11,20 @@ namespace API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private UserService _us = new UserService();
         [HttpPost("create")]
         public IActionResult CreateUser([FromBody] UserDTO userDTO)
         {
-            return Ok(); //TODO Add service to add user to actual DB should return BadRequest if userName is already in DB or if  
+            try
+            {
+                _us.RegisterUser(userDTO);
+                return Ok(userDTO);
+            }
+
+           catch (Exception err)
+            {
+                return BadRequest(err.Message);
+            }  
         }
         [HttpPost("login")]
         public IActionResult LoginUser()
@@ -25,15 +36,15 @@ namespace API.Controllers
             var splitString = decodedString.Split(":");
             var Username = splitString[0];
             var Password = splitString[1];
-            return Ok(); //TODO Add service to get user from DB, check that username and passwords match. Return error if not or of if no Authorization header has been provided. Should return BadRequest() in those cases, should also set UserIsLogedIn to true. otherwise should return ok. 
+            try
+            {
+                _us.LoginUser(Username, Password);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Ok("User Logged In"); //TODO Add service to get user from DB, check that username and passwords match. Return error if not or of if no Authorization header has been provided. Should return BadRequest() in those cases, should also set UserIsLogedIn to true. otherwise should return ok. 
         }
-        [HttpPost("register")]
-        //public IActionResult RegisterUser(RegisterUserDTO newUser)
-        //{
-        //    if(UserService.GetUserByUserName(newUser.UserName)){return BadRequest("Username allready exists")}
-        //    Check Password Strenght. 
-        //    if(PasswordStrength())
-        //    return Ok();
-        //}
     }
 }
