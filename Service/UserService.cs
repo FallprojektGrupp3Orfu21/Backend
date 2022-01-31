@@ -73,7 +73,7 @@ namespace Service.Models
                 {
                     throw new Exception("Invalid Username");
                 }
-                if (user.IsLoggedIn)
+                if (IsUserLoggedIn(userName, password))
                 {
                     throw new Exception("User is already logged in");
                 }
@@ -93,6 +93,28 @@ namespace Service.Models
                 else
                 {
                     throw new Exception("Invalid username or password");
+                }
+            }
+            return true;
+        }
+
+        public bool LogoutUser(string userName, string password)
+        {
+            using(var context = new EconomiqContext())
+            {
+                var user = context.Users.Where(user => user.UserName == userName).FirstOrDefault();
+                if(user is null)
+                {
+                    throw new Exception("Invalid username");
+                }
+                else if(!IsUserLoggedIn(userName, password))
+                {
+                    throw new Exception("User not logged in");
+                }
+                else
+                {
+                    user.IsLoggedIn = false;
+                    context.SaveChanges();
                 }
             }
             return true;

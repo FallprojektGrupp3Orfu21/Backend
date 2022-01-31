@@ -46,5 +46,25 @@ namespace API.Controllers
             }
             return Ok("User Logged In"); 
         }
+        [HttpPost("logout")]
+        public IActionResult LogoutUser()
+        {
+            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
+            var credentialsAsbase64 = header.Parameter;
+            byte[] data = Convert.FromBase64String(credentialsAsbase64);
+            string decodedString = Encoding.UTF8.GetString(data);
+            var splitString = decodedString.Split(":");
+            var Username = splitString[0];
+            var Password = splitString[1];
+            try
+            {
+                _us.LogoutUser(Username, Password);
+            }
+            catch (Exception err)
+            {
+                return BadRequest(err.Message);
+            }
+            return Ok("User logged out");
+        }
     }
 }
