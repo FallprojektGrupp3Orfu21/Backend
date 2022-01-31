@@ -25,22 +25,34 @@ namespace API.Controllers
 
 
         [HttpPost("createExpenseCategory")]
-        public IActionResult CreateExpenseCategory([FromBody] ExpenseCategoryDTO expenseCategoryDTO) //NOT FINISHED WAY OF TAKING IN INFO JUST USING TEMP DTO FOR TESTING SINCE MY POSTMAN WONT GET LOGIN TO WORK //Alex
+        public IActionResult CreateExpenseCategory([FromBody] ExpenseCategoryDTO expenseCategoryDTO) 
         {
-            //if (_userService.IsUserLoggedIn(expenseCategoryDTO.UserName, expenseCategoryDTO.Password))
-            //{
+            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
+            var credentialsAsbase64 = header.Parameter;
+            byte[] data = Convert.FromBase64String(credentialsAsbase64);
+            string decodedString = Encoding.UTF8.GetString(data);
+            var splitString = decodedString.Split(":");
+            var Username = splitString[0];
+            var Password = splitString[1];
 
-            //}
-            try
+            if (_userService.IsUserLoggedIn(Username, Password))
             {
-                _categoryService.CreateExpenseCategory(expenseCategoryDTO.UserName, expenseCategoryDTO.CategoryName);
-                return Ok(expenseCategoryDTO);
-            }
+                try
+                {
+                    _categoryService.CreateExpenseCategory(Username, expenseCategoryDTO.CategoryName);
+                    return Ok(expenseCategoryDTO);
+                }
 
-            catch (Exception err)
-            {
-                return BadRequest(err.Message);
+                catch (Exception err)
+                {
+                    return BadRequest(err.Message);
+                }
             }
+            else
+            {
+                return BadRequest("User not logged in");
+            }
+            
 
         }
 
