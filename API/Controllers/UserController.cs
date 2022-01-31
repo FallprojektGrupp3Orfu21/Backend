@@ -44,7 +44,7 @@ namespace API.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            return Ok("User Logged In"); //TODO Add service to get user from DB, check that username and passwords match. Return error if not or of if no Authorization header has been provided. Should return BadRequest() in those cases, should also set UserIsLogedIn to true. otherwise should return ok. 
+            return Ok("User Logged In"); 
         }
     }
 }
