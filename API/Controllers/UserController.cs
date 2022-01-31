@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO;
 using Service.Models;
@@ -12,6 +13,7 @@ namespace API.Controllers
     public class UserController : ControllerBase
     {
         private UserService _us = new UserService();
+        [EnableCors("corsapp")]
         [HttpPost("create")]
         public IActionResult CreateUser([FromBody] UserDTO userDTO)
         {
@@ -26,6 +28,7 @@ namespace API.Controllers
                 return BadRequest(err.Message);
             }  
         }
+        [EnableCors("corsapp")]
         [HttpPost("login")]
         public IActionResult LoginUser()
         {
@@ -46,6 +49,7 @@ namespace API.Controllers
             }
             return Ok("User Logged In"); 
         }
+        [EnableCors("corsapp")]
         [HttpPost("logout")]
         public IActionResult LogoutUser()
         {
