@@ -12,13 +12,13 @@ namespace DAL.Extensions
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            var u1 = new User() { Id = 1, UserName = "JuliaH", Fname = "Julia", Lname = "Hook", Password = "Testing123", CreationDate = DateTime.Now };
-            var u2 = new User() { Id = 2, UserName = "AlexV", Fname = "Alexander", Lname = "Volonen", Password = "Testing234", CreationDate = DateTime.Now };
-            var u3 = new User() { Id = 3, UserName = "Peppo", Fname = "Stefan", Lname = "Krakowsky", Password = "Testing345", CreationDate = DateTime.Now };
-            var u4 = new User() { Id = 4, UserName = "WinnieH", Fname = "Winnie", Lname = "Huynh", Password = "Testing456", CreationDate = DateTime.Now };
-            var u5 = new User() { Id = 5, UserName = "Ericx", Fname = "Eric", Lname = "Flodin", Password = "Testing567", CreationDate = DateTime.Now };
-            var u6 = new User() { Id = 6, UserName = "AndersB", Fname = "Anders", Lname = "Bergstrom", Password = "Testing678", CreationDate = DateTime.Now };
-            var u7 = new User() { Id = 7, UserName = "PeterH", Fname = "Peter", Lname = "Hafid", Password = "Testing789", CreationDate = DateTime.Now };
+            var u1 = new User() { Id = 1, UserName = "JuliaH", Fname = "Julia", Lname = "Hook", Password = "Testing123", Gender = "Female", City = "Orebro", CreationDate = DateTime.Now };
+            var u2 = new User() { Id = 2, UserName = "AlexV", Fname = "Alexander", Lname = "Volonen", Password = "Testing234", Gender = "Male", City = "Orebro", CreationDate = DateTime.Now };
+            var u3 = new User() { Id = 3, UserName = "Peppo", Fname = "Stefan", Lname = "Krakowsky", Password = "Testing345", Gender = "Male", City = "Orebro", CreationDate = DateTime.Now };
+            var u4 = new User() { Id = 4, UserName = "WinnieH", Fname = "Winnie", Lname = "Huynh", Password = "Testing456", Gender = "Female", City = "Orebro", CreationDate = DateTime.Now };
+            var u5 = new User() { Id = 5, UserName = "Ericx", Fname = "Eric", Lname = "Flodin", Password = "Testing567", Gender = "Male", City = "Orebro", CreationDate = DateTime.Now };
+            var u6 = new User() { Id = 6, UserName = "AndersB", Fname = "Anders", Lname = "Bergstrom", Password = "Testing678", Gender = "Male", City = "Fjugesta", CreationDate = DateTime.Now };
+            var u7 = new User() { Id = 7, UserName = "PeterH", Fname = "Peter", Lname = "Hafid", Password = "Testing789", Gender = "Male", City = "Orebro", CreationDate = DateTime.Now };
             modelBuilder.Entity<User>().HasData(u1, u2, u3, u4, u5, u6, u7);
 
             var em1 = new Email() { Mail = "JuliaH@test.com" , UserNavId = 1};
@@ -39,7 +39,7 @@ namespace DAL.Extensions
 
             modelBuilder.Entity<ExpenseCategory>().HasData(ec, ec2, ec3, ec4, ec5);
 
-            var e1 = new Expense() { Id = 1, Amount = 25, Comment = "Glass", CategoryNavId = 1, ExpenseDate = DateTime.Now , UserNavId = 1};
+            var e1 = new Expense() { Id = 1, Amount = 25, Comment = "Glass", CategoryNavId = 2, ExpenseDate = DateTime.Now , UserNavId = 1};
             modelBuilder.Entity<Expense>().HasData(e1);
 
             modelBuilder.Entity<ExpenseCategory>()

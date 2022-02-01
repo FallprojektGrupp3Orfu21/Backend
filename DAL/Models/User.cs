@@ -13,8 +13,10 @@ namespace DAL.Models
         public string UserName { get; set; }
         public string Password { get; set; } //Is this really needed if using jwt authentication? 
         public string Fname { get; set; }
-        public string Lname { get; set; } 
-        
+        public string Lname { get; set; }
+        public string Gender { get; set; }
+        public string City { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime CreationDate { get; set; }
 

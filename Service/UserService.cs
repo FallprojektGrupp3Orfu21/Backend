@@ -47,7 +47,9 @@ namespace Service.Models
                     Password = newUser.password,
                     Emails = Emails,
                     IsLoggedIn = false,
-                    CreationDate = DateTime.Now
+                    CreationDate = DateTime.Now,
+                    City = newUser.City,
+                    Gender = newUser.Gender
                 });
                 try
                 {
