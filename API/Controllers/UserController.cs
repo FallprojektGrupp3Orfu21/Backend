@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO;
 using Service.Models;
@@ -12,6 +13,7 @@ namespace API.Controllers
     public class UserController : ControllerBase
     {
         private UserService _us = new UserService();
+        [EnableCors("corsapp")]
         [HttpPost("create")]
         public IActionResult CreateUser([FromBody] UserDTO userDTO)
         {
@@ -26,6 +28,7 @@ namespace API.Controllers
                 return BadRequest(err.Message);
             }  
         }
+        [EnableCors("corsapp")]
         [HttpPost("login")]
         public IActionResult LoginUser()
         {
@@ -44,7 +47,28 @@ namespace API.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            return Ok("User Logged In"); //TODO Add service to get user from DB, check that username and passwords match. Return error if not or of if no Authorization header has been provided. Should return BadRequest() in those cases, should also set UserIsLogedIn to true. otherwise should return ok. 
+            return Ok("User Logged In"); 
+        }
+        [EnableCors("corsapp")]
+        [HttpPost("logout")]
+        public IActionResult LogoutUser()
+        {
+            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
+            var credentialsAsbase64 = header.Parameter;
+            byte[] data = Convert.FromBase64String(credentialsAsbase64);
+            string decodedString = Encoding.UTF8.GetString(data);
+            var splitString = decodedString.Split(":");
+            var Username = splitString[0];
+            var Password = splitString[1];
+            try
+            {
+                _us.LogoutUser(Username, Password);
+            }
+            catch (Exception err)
+            {
+                return BadRequest(err.Message);
+            }
+            return Ok("User logged out");
         }
     }
 }

@@ -11,7 +11,7 @@ namespace DAL.Models
     {
         public int Id { get; set; }
         [DataType(DataType.Currency)]
-        public float Amount { get; set; }
+        public decimal Amount { get; set; }
 
         public Recipient? Recipient {get; set;}
 

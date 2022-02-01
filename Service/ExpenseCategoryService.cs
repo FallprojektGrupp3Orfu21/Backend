@@ -19,10 +19,10 @@ namespace Service
                     throw new Exception("No User with this Username.");
                 }
                 var category = context.ExpensesCategory.Where(c=>c.CategoryName.ToLower() == categoryName.ToLower()).FirstOrDefault();
+                //Goes in here to create the category and add it to the User if the category does not already exist.
                 if (category == null)
                 {
                     var expenseCategory = new ExpenseCategory { CategoryName = categoryName, CreationDate = DateTime.Now };
-                    //context.ExpensesCategory.Add(expenseCategory);
                     
                     if(user.ExpensesCategoryNav == null)
                     {
@@ -44,6 +44,7 @@ namespace Service
                         throw new Exception("Something went wrong");
                     }
                 }
+                //Goes in here and adds Category to the User, if there already exists a category with the same name.
                 else
                 {
                     if(user.ExpensesCategoryNav == null)
