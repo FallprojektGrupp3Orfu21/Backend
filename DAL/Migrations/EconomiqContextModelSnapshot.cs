@@ -89,6 +89,9 @@ namespace DAL.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("ExpenseDate")
                         .HasColumnType("datetime2");
 
@@ -115,7 +118,8 @@ namespace DAL.Migrations
                             Amount = 25m,
                             CategoryNavId = 2,
                             Comment = "Glass",
-                            ExpenseDate = new DateTime(2022, 2, 1, 10, 5, 46, 326, DateTimeKind.Local).AddTicks(724),
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7673),
+                            ExpenseDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7675),
                             UserNavId = 1
                         });
                 });
@@ -144,31 +148,31 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             CategoryName = "Rent",
-                            CreationDate = new DateTime(2022, 2, 1, 10, 5, 46, 326, DateTimeKind.Local).AddTicks(697)
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7655)
                         },
                         new
                         {
                             Id = 2,
                             CategoryName = "Food",
-                            CreationDate = new DateTime(2022, 2, 1, 10, 5, 46, 326, DateTimeKind.Local).AddTicks(700)
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7657)
                         },
                         new
                         {
                             Id = 3,
                             CategoryName = "Transport",
-                            CreationDate = new DateTime(2022, 2, 1, 10, 5, 46, 326, DateTimeKind.Local).AddTicks(702)
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7658)
                         },
                         new
                         {
                             Id = 4,
                             CategoryName = "Clothing",
-                            CreationDate = new DateTime(2022, 2, 1, 10, 5, 46, 326, DateTimeKind.Local).AddTicks(704)
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7660)
                         },
                         new
                         {
                             Id = 5,
                             CategoryName = "Entertainment",
-                            CreationDate = new DateTime(2022, 2, 1, 10, 5, 46, 326, DateTimeKind.Local).AddTicks(706)
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7661)
                         });
                 });
 
@@ -232,7 +236,7 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             City = "Orebro",
-                            CreationDate = new DateTime(2022, 2, 1, 10, 5, 46, 326, DateTimeKind.Local).AddTicks(492),
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7512),
                             Fname = "Julia",
                             Gender = "Female",
                             IsLoggedIn = false,
@@ -244,7 +248,7 @@ namespace DAL.Migrations
                         {
                             Id = 2,
                             City = "Orebro",
-                            CreationDate = new DateTime(2022, 2, 1, 10, 5, 46, 326, DateTimeKind.Local).AddTicks(530),
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7540),
                             Fname = "Alexander",
                             Gender = "Male",
                             IsLoggedIn = false,
@@ -256,7 +260,7 @@ namespace DAL.Migrations
                         {
                             Id = 3,
                             City = "Orebro",
-                            CreationDate = new DateTime(2022, 2, 1, 10, 5, 46, 326, DateTimeKind.Local).AddTicks(533),
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7542),
                             Fname = "Stefan",
                             Gender = "Male",
                             IsLoggedIn = false,
@@ -268,7 +272,7 @@ namespace DAL.Migrations
                         {
                             Id = 4,
                             City = "Orebro",
-                            CreationDate = new DateTime(2022, 2, 1, 10, 5, 46, 326, DateTimeKind.Local).AddTicks(535),
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7544),
                             Fname = "Winnie",
                             Gender = "Female",
                             IsLoggedIn = false,
@@ -280,7 +284,7 @@ namespace DAL.Migrations
                         {
                             Id = 5,
                             City = "Orebro",
-                            CreationDate = new DateTime(2022, 2, 1, 10, 5, 46, 326, DateTimeKind.Local).AddTicks(537),
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7545),
                             Fname = "Eric",
                             Gender = "Male",
                             IsLoggedIn = false,
@@ -292,7 +296,7 @@ namespace DAL.Migrations
                         {
                             Id = 6,
                             City = "Fjugesta",
-                            CreationDate = new DateTime(2022, 2, 1, 10, 5, 46, 326, DateTimeKind.Local).AddTicks(539),
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7549),
                             Fname = "Anders",
                             Gender = "Male",
                             IsLoggedIn = false,
@@ -304,7 +308,7 @@ namespace DAL.Migrations
                         {
                             Id = 7,
                             City = "Orebro",
-                            CreationDate = new DateTime(2022, 2, 1, 10, 5, 46, 326, DateTimeKind.Local).AddTicks(541),
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7551),
                             Fname = "Peter",
                             Gender = "Male",
                             IsLoggedIn = false,

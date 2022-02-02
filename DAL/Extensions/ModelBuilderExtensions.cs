@@ -39,7 +39,7 @@ namespace DAL.Extensions
 
             modelBuilder.Entity<ExpenseCategory>().HasData(ec, ec2, ec3, ec4, ec5);
 
-            var e1 = new Expense() { Id = 1, Amount = 25, Comment = "Glass", CategoryNavId = 2, ExpenseDate = DateTime.Now , UserNavId = 1};
+            var e1 = new Expense() { Id = 1, Amount = 25, Comment = "Glass", CategoryNavId = 2, CreationDate = DateTime.Now ,ExpenseDate = DateTime.Now , UserNavId = 1};
             modelBuilder.Entity<Expense>().HasData(e1);
 
             modelBuilder.Entity<ExpenseCategory>()
