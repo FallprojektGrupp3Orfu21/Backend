@@ -19,7 +19,7 @@ namespace Service.Models
         private int _minimumPasswordLength = 8;
         private bool IsPasswordOk(string password)
         {
-            return password.Length > _minimumPasswordLength;
+            return password.Length >= _minimumPasswordLength;
         }
         public void RegisterUser(UserDTO newUser)
         {
@@ -47,7 +47,9 @@ namespace Service.Models
                     Password = newUser.password,
                     Emails = Emails,
                     IsLoggedIn = false,
-                    CreationDate = DateTime.Now
+                    CreationDate = DateTime.Now,
+                    City = newUser.City,
+                    Gender = newUser.Gender
                 });
                 try
                 {

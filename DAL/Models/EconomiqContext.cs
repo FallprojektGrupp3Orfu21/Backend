@@ -34,7 +34,7 @@ namespace DAL.Models
                 .HasKey(r => r.Id);
             modelbuilder.Entity<Email>()
                 .HasKey(c => new { c.UserNavId, c.Mail });
-
+            //Relations
             modelbuilder.Entity<Expense>()
                 .HasOne(u => u.UserNav)
                 .WithMany(e => e.UserExpensesNav)

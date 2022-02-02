@@ -80,14 +80,17 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<float>("Amount")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("CategoryNavId")
                         .HasColumnType("int");
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ExpenseDate")
                         .HasColumnType("datetime2");
@@ -112,10 +115,11 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            Amount = 25f,
-                            CategoryNavId = 1,
+                            Amount = 25m,
+                            CategoryNavId = 2,
                             Comment = "Glass",
-                            ExpenseDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3846),
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7673),
+                            ExpenseDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7675),
                             UserNavId = 1
                         });
                 });
@@ -144,31 +148,31 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             CategoryName = "Rent",
-                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3830)
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7655)
                         },
                         new
                         {
                             Id = 2,
                             CategoryName = "Food",
-                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3832)
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7657)
                         },
                         new
                         {
                             Id = 3,
                             CategoryName = "Transport",
-                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3833)
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7658)
                         },
                         new
                         {
                             Id = 4,
                             CategoryName = "Clothing",
-                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3835)
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7660)
                         },
                         new
                         {
                             Id = 5,
                             CategoryName = "Entertainment",
-                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3836)
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7661)
                         });
                 });
 
@@ -193,10 +197,18 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Fname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -223,8 +235,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3697),
+                            City = "Orebro",
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7512),
                             Fname = "Julia",
+                            Gender = "Female",
                             IsLoggedIn = false,
                             Lname = "Hook",
                             Password = "Testing123",
@@ -233,8 +247,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 2,
-                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3731),
+                            City = "Orebro",
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7540),
                             Fname = "Alexander",
+                            Gender = "Male",
                             IsLoggedIn = false,
                             Lname = "Volonen",
                             Password = "Testing234",
@@ -243,8 +259,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 3,
-                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3733),
+                            City = "Orebro",
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7542),
                             Fname = "Stefan",
+                            Gender = "Male",
                             IsLoggedIn = false,
                             Lname = "Krakowsky",
                             Password = "Testing345",
@@ -253,8 +271,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 4,
-                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3735),
+                            City = "Orebro",
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7544),
                             Fname = "Winnie",
+                            Gender = "Female",
                             IsLoggedIn = false,
                             Lname = "Huynh",
                             Password = "Testing456",
@@ -263,8 +283,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 5,
-                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3737),
+                            City = "Orebro",
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7545),
                             Fname = "Eric",
+                            Gender = "Male",
                             IsLoggedIn = false,
                             Lname = "Flodin",
                             Password = "Testing567",
@@ -273,8 +295,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 6,
-                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3738),
+                            City = "Fjugesta",
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7549),
                             Fname = "Anders",
+                            Gender = "Male",
                             IsLoggedIn = false,
                             Lname = "Bergstrom",
                             Password = "Testing678",
@@ -283,8 +307,10 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 7,
-                            CreationDate = new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3740),
+                            City = "Orebro",
+                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7551),
                             Fname = "Peter",
+                            Gender = "Male",
                             IsLoggedIn = false,
                             Lname = "Hafid",
                             Password = "Testing789",

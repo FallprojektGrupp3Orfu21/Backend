@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class TestingNM : Migration
+    public partial class addedstuffnthings : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,6 +45,8 @@ namespace DAL.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Fname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Lname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsLoggedIn = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -101,9 +103,10 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Amount = table.Column<float>(type: "real", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     RecipientId = table.Column<int>(type: "int", nullable: true),
                     ExpenseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserNavId = table.Column<int>(type: "int", nullable: false),
                     CategoryNavId = table.Column<int>(type: "int", nullable: true)
@@ -133,25 +136,25 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "CategoryName", "CreationDate" },
                 values: new object[,]
                 {
-                    { 1, "Rent", new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3830) },
-                    { 2, "Food", new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3832) },
-                    { 3, "Transport", new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3833) },
-                    { 4, "Clothing", new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3835) },
-                    { 5, "Entertainment", new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3836) }
+                    { 1, "Rent", new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7655) },
+                    { 2, "Food", new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7657) },
+                    { 3, "Transport", new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7658) },
+                    { 4, "Clothing", new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7660) },
+                    { 5, "Entertainment", new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7661) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "CreationDate", "Fname", "IsLoggedIn", "Lname", "Password", "UserName" },
+                columns: new[] { "Id", "City", "CreationDate", "Fname", "Gender", "IsLoggedIn", "Lname", "Password", "UserName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3697), "Julia", false, "Hook", "Testing123", "JuliaH" },
-                    { 2, new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3731), "Alexander", false, "Volonen", "Testing234", "AlexV" },
-                    { 3, new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3733), "Stefan", false, "Krakowsky", "Testing345", "Peppo" },
-                    { 4, new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3735), "Winnie", false, "Huynh", "Testing456", "WinnieH" },
-                    { 5, new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3737), "Eric", false, "Flodin", "Testing567", "Ericx" },
-                    { 6, new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3738), "Anders", false, "Bergstrom", "Testing678", "AndersB" },
-                    { 7, new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3740), "Peter", false, "Hafid", "Testing789", "PeterH" }
+                    { 1, "Orebro", new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7512), "Julia", "Female", false, "Hook", "Testing123", "JuliaH" },
+                    { 2, "Orebro", new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7540), "Alexander", "Male", false, "Volonen", "Testing234", "AlexV" },
+                    { 3, "Orebro", new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7542), "Stefan", "Male", false, "Krakowsky", "Testing345", "Peppo" },
+                    { 4, "Orebro", new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7544), "Winnie", "Female", false, "Huynh", "Testing456", "WinnieH" },
+                    { 5, "Orebro", new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7545), "Eric", "Male", false, "Flodin", "Testing567", "Ericx" },
+                    { 6, "Fjugesta", new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7549), "Anders", "Male", false, "Bergstrom", "Testing678", "AndersB" },
+                    { 7, "Orebro", new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7551), "Peter", "Male", false, "Hafid", "Testing789", "PeterH" }
                 });
 
             migrationBuilder.InsertData(
@@ -212,8 +215,8 @@ namespace DAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "Expenses",
-                columns: new[] { "Id", "Amount", "CategoryNavId", "Comment", "ExpenseDate", "RecipientId", "UserNavId" },
-                values: new object[] { 1, 25f, 1, "Glass", new DateTime(2022, 1, 28, 12, 48, 28, 53, DateTimeKind.Local).AddTicks(3846), null, 1 });
+                columns: new[] { "Id", "Amount", "CategoryNavId", "Comment", "CreationDate", "ExpenseDate", "RecipientId", "UserNavId" },
+                values: new object[] { 1, 25m, 2, "Glass", new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7673), new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7675), null, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExpenseCategoryUser_UserNavId",
