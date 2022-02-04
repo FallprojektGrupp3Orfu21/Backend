@@ -17,6 +17,8 @@ namespace DAL.Models
 
         [DataType(DataType.Date)]
         public DateTime ExpenseDate { get; set; }
+        public DateTime CreationDate { get; set; }
+       
 
         
         public string? Comment { get; set; }

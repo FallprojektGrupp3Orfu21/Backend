@@ -24,9 +24,6 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors("corsapp");
 app.UseHttpsRedirection();
-app.UseAuthorization();
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

@@ -19,11 +19,13 @@ namespace Service
         {
             using (var context = new EconomiqContext())
             {
+                //Gest the user by username
                 var user = context.Users.Where(user => user.UserName == userName).FirstOrDefault();
                 if (user == null)
                 {
                     throw new Exception("No User with this Username.");
                 }
+                //Gets the category the expense belongs to, or creates one if it doesnt exist.
                 var category = context.ExpensesCategory.Where(c => c.CategoryName.ToLower() == expense.CategoryName.ToLower()).FirstOrDefault();
                 if (category == null)
                 {
@@ -37,13 +39,15 @@ namespace Service
                         throw new Exception("Something Went Wrong Here");
                     } 
                 }
+                //Length Check for title/comment
                 if(expense.Title.Length > 50)
                 {
                     throw new Exception("Title Too Long (Needs to be less than 50 characters)");
                 }
-                //DateTime creationDate = DateTime.Parse(expense.Date); -Read Comment on date in ExpenseDTO
+                //Creates the expense and adds it to the user (creates list ifs the first expense on the user)
+                DateTime expenseDate = DateTime.Parse(expense.ExpenseDate);
                 DateTime creationDate = DateTime.Now;
-                var newExpense = new Expense { Amount = expense.Amount, ExpenseDate = creationDate, Comment = expense.Title, UserNavId = user.Id, CategoryNavId = category.Id};
+                var newExpense = new Expense { Amount = expense.Amount, CreationDate = creationDate, ExpenseDate = expenseDate, Comment = expense.Title, UserNavId = user.Id, CategoryNavId = category.Id};
                 
                 if(user.UserExpensesNav == null)
                 {
@@ -63,16 +67,6 @@ namespace Service
                     throw new Exception("Something went wrong");
                 }
             }
-        }
-        public List<ExpenseDTO> GetExpensesByUser(UserDTO user)
-        {
-            var Expenses = new List<ExpenseDTO>();
-            Expenses.Add(
-                new ExpenseDTO
-                {
-
-                });
-            return Expenses;
         }
     }
 }
