@@ -138,6 +138,12 @@ namespace Service.Models
                 }
             }
         }
-
+        public bool DoesUserExist(string userName)
+        {
+            using(var context = new EconomiqContext())
+            {
+                return (context.Users.Where(user => user.UserName == userName).FirstOrDefault() == null); 
+            }
+        }
     }
 }
