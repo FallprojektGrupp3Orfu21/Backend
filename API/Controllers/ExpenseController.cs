@@ -29,9 +29,12 @@ namespace API.Controllers
             var splitString = decodedString.Split(":");
             var Username = splitString[0];
             var Password = splitString[1];
+            if (!_userService.DoesUserExist(Username))
+            {
+                return BadRequest("Invalid Username");
+            }
 
-            
-            if (_userService.IsUserLoggedIn(Username, Password))
+            else if (_userService.IsUserLoggedIn(Username, Password))
             {
                 try
                 {
@@ -48,7 +51,7 @@ namespace API.Controllers
             {
                 return BadRequest("User not logged in");
             }
-            
+
         }
     }
 }

@@ -39,15 +39,22 @@ namespace API.Controllers
             var splitString = decodedString.Split(":");
             var Username = splitString[0];
             var Password = splitString[1];
-            try
+            if (!_us.DoesUserExist(Username))
             {
-                _us.LoginUser(Username, Password);
+                return BadRequest("Invalid Username");
             }
-            catch(Exception ex)
+            else
             {
-                return BadRequest(ex.Message);
+                try
+                {
+                    _us.LoginUser(Username, Password);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+                return Ok("User Logged In");
             }
-            return Ok("User Logged In"); 
         }
         [EnableCors("corsapp")]
         [HttpPost("logout")]
@@ -60,6 +67,7 @@ namespace API.Controllers
             var splitString = decodedString.Split(":");
             var Username = splitString[0];
             var Password = splitString[1];
+            if(!_us.DoesUserExist(Username))
             try
             {
                 _us.LogoutUser(Username, Password);
