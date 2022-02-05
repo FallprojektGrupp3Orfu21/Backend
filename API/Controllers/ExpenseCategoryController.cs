@@ -28,20 +28,15 @@ namespace API.Controllers
         public IActionResult CreateExpenseCategory([FromBody] ExpenseCategoryDTO expenseCategoryDTO) 
         {
             var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
-            var credentialsAsbase64 = header.Parameter;
-            byte[] data = Convert.FromBase64String(credentialsAsbase64);
-            string decodedString = Encoding.UTF8.GetString(data);
-            var splitString = decodedString.Split(":");
-            var Username = splitString[0];
-            var Password = splitString[1];
-            if (!_userService.DoesUserExist(Username)){
+            var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
+            if (!_userService.DoesUserExist(credentials[0])){
                 return BadRequest("Invalid Username");
             }
-            else if (_userService.IsUserLoggedIn(Username, Password))
+            else if (_userService.IsUserLoggedIn(credentials[0], credentials[1]))
             {
                 try
                 {
-                    _categoryService.CreateExpenseCategory(Username, expenseCategoryDTO.CategoryName);
+                    _categoryService.CreateExpenseCategory(credentials[0], expenseCategoryDTO.CategoryName);
                     return Ok(expenseCategoryDTO);
                 }
 

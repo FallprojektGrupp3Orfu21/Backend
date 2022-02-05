@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using DAL.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO;
@@ -12,6 +13,7 @@ namespace API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+
         private UserService _us = new UserService();
         [EnableCors("corsapp")]
         [HttpPost("create")]
@@ -33,13 +35,8 @@ namespace API.Controllers
         public IActionResult LoginUser()
         {
             var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
-            var credentialsAsbase64 = header.Parameter;
-            byte[] data = Convert.FromBase64String(credentialsAsbase64);
-            string decodedString = Encoding.UTF8.GetString(data);
-            var splitString = decodedString.Split(":");
-            var Username = splitString[0];
-            var Password = splitString[1];
-            if (!_us.DoesUserExist(Username))
+            var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
+            if (!_us.DoesUserExist(credentials[0]))
             {
                 return BadRequest("Invalid Username");
             }
@@ -47,7 +44,7 @@ namespace API.Controllers
             {
                 try
                 {
-                    _us.LoginUser(Username, Password);
+                    _us.LoginUser(credentials[0], credentials[1]);
                 }
                 catch (Exception ex)
                 {
@@ -61,16 +58,13 @@ namespace API.Controllers
         public IActionResult LogoutUser()
         {
             var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
-            var credentialsAsbase64 = header.Parameter;
-            byte[] data = Convert.FromBase64String(credentialsAsbase64);
-            string decodedString = Encoding.UTF8.GetString(data);
-            var splitString = decodedString.Split(":");
-            var Username = splitString[0];
-            var Password = splitString[1];
-            if(!_us.DoesUserExist(Username))
+            var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
+            if (!_us.DoesUserExist(credentials[0])){
+                return BadRequest("Invalid Username");
+            }
             try
             {
-                _us.LogoutUser(Username, Password);
+                _us.LogoutUser(credentials[0], credentials[1]);
             }
             catch (Exception err)
             {
@@ -78,5 +72,11 @@ namespace API.Controllers
             }
             return Ok("User logged out");
         }
+  //      [HttpGet("expenses")]
+        //public List<Expense> GetExpense()
+       // {
+            
+
+//        }
     }
 }

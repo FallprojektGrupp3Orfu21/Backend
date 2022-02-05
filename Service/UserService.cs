@@ -144,7 +144,7 @@ namespace Service.Models
         {
             using(var context = new EconomiqContext())
             {
-                return (context.Users.Where(user => user.UserName == userName).FirstOrDefault() == null); 
+                return (context.Users.Where(user => user.UserName == userName) !=  null); 
             }
         }
     }
