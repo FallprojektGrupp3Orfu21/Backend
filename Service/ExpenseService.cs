@@ -15,7 +15,7 @@ namespace Service
         {
             _expenseCategoryService = new ExpenseCategoryService();
         }
-        public bool AddExpense(ExpenseDTO expense, string userName)
+        public bool AddExpense(GetExpenseDTO expense, string userName)
         {
             using (var context = new EconomiqContext())
             {

@@ -99,6 +99,32 @@ namespace Service.Models
             }
             return true;
         }
+        private bool DoesPasswordMatch(string username, string password)
+        {
+            using(var context = new EconomiqContext())
+            {
+                var user = context.Users.Where(user => user.UserName == username).FirstOrDefault();
+                return (user.Password == password);
+            }
+        }
+        public List<Expense> GetAllExpensesByUsername(string Username, string Password)
+        {
+            try
+            {
+                if (!DoesPasswordMatch(Username, Password))
+                {
+                    throw new Exception("Invalid Username or Password");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex; 
+            }
+            using(var context = new EconomiqContext())
+            {
+                return context.Users.Where(user => user.UserName == Username).FirstOrDefault().UserExpensesNav;   
+            }
+        }
 
         public bool LogoutUser(string userName, string password)
         {
