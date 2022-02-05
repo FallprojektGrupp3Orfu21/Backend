@@ -74,7 +74,7 @@ namespace API.Controllers
             return Ok("User logged out");
         }
         [HttpPost("expenses")]
-        public Service.GetExpenseDTO GetExpenses()
+        public IActionResult GetExpenses()
         {
             var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
             var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
@@ -85,7 +85,7 @@ namespace API.Controllers
                 toReturn.ErrorCode = (int)System.Net.HttpStatusCode.Forbidden;
                 toReturn.StatusMessage = "Invalid Username";
                 toReturn.Expenses = new List<Expense>();
-
+                return StatusCode((int)System.Net.HttpStatusCode.Forbidden, toReturn);
             }
             else
             {
@@ -96,9 +96,12 @@ namespace API.Controllers
                     toReturn.ErrorCode = (int)System.Net.HttpStatusCode.OK;
                     toReturn.StatusMessage = "Ok";
                     toReturn.Expenses = new List<Expense>();
-                    foreach (Expense theExpense in results)
+                    if (!(results is null))
                     {
-                        toReturn.Expenses.Add(theExpense);
+                        foreach (Expense theExpense in results)
+                        {
+                            toReturn.Expenses.Add(theExpense);
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -106,9 +109,10 @@ namespace API.Controllers
                     toReturn.ErrorCode = (int)System.Net.HttpStatusCode.Forbidden;
                     toReturn.StatusMessage = ex.Message;
                     toReturn.Expenses = new List<Expense>();
+                    return StatusCode((int)System.Net.HttpStatusCode.Forbidden, toReturn);
                 }
             }
-            return toReturn;
+            return Ok(toReturn);
         }
     }
 }
