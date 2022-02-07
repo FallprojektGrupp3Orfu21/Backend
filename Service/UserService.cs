@@ -109,21 +109,22 @@ namespace Service.Models
         }
         public List<Expense> GetAllExpensesByUsername(string Username, string Password)
         {
-            try
-            {
-                if (!DoesPasswordMatch(Username, Password))
-                {
-                    throw new Exception("Invalid Username or Password");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex; 
-            }
-            using(var context = new EconomiqContext())
-            {
-                return context.Users.Where(user => user.UserName == Username).FirstOrDefault().UserExpensesNav;   
-            }
+            return new List<Expense>();
+            //try
+            //{
+            //    if (!DoesPasswordMatch(Username, Password))
+            //    {
+            //        throw new Exception("Invalid Username or Password");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex; 
+            //}
+            //using(var context = new EconomiqContext())
+            //{
+            //    return context.Users.Where(user => user.UserName == Username).FirstOrDefault().UserExpensesNav;   
+            //}
         }
 
         public bool LogoutUser(string userName, string password)

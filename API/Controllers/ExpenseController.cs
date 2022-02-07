@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service;
+using Service.DTO;
 using Service.Models;
 using System.Net.Http.Headers;
 using System.Text;
@@ -20,7 +21,7 @@ namespace API.Controllers
         }
 
         [HttpPost("createExpense")]
-        public IActionResult CreateExpense([FromBody] GetExpenseDTO expenseDTO)
+        public IActionResult CreateExpense([FromBody] ExpenseDTO expenseDTO)
         {
             var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
             var credentials = UserNameAndPassword.GetUserNameAndPassword(header);

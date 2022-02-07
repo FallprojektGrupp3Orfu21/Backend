@@ -73,46 +73,48 @@ namespace API.Controllers
             }
             return Ok("User logged out");
         }
-        [HttpPost("expenses")]
+        [HttpGet("expenses")]
         public IActionResult GetExpenses()
         {
-            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
-            var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
-            var toReturn = new Service.GetExpenseDTO();
-            if (!_us.DoesUserExist(credentials[0]) || (!_us.IsUserLoggedIn(credentials[0], credentials[1])))
-            {
+            return Ok();
+            
+            //var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
+            //var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
+            //var toReturn = new GetExpenseDTO();
+            //if (!_us.DoesUserExist(credentials[0]) || (!_us.IsUserLoggedIn(credentials[0], credentials[1])))
+            //{
 
-                toReturn.ErrorCode = (int)System.Net.HttpStatusCode.Forbidden;
-                toReturn.StatusMessage = "Invalid Username";
-                toReturn.Expenses = new List<Expense>();
-                return StatusCode((int)System.Net.HttpStatusCode.Forbidden, toReturn);
-            }
-            else
-            {
-                try
-                {
-                    var results = _us.GetAllExpensesByUsername(credentials[0], credentials[1]);
+            //    toReturn.ErrorCode = (int)System.Net.HttpStatusCode.Forbidden;
+            //    toReturn.StatusMessage = "Invalid Username";
+            //    toReturn.Expenses = new List<Expense>();
+            //    return StatusCode((int)System.Net.HttpStatusCode.Forbidden, toReturn);
+            //}
+            //else
+            //{
+            //    try
+            //    {
+            //        var results = _us.GetAllExpensesByUsername(credentials[0], credentials[1]);
 
-                    toReturn.ErrorCode = (int)System.Net.HttpStatusCode.OK;
-                    toReturn.StatusMessage = "Ok";
-                    toReturn.Expenses = new List<Expense>();
-                    if (!(results is null))
-                    {
-                        foreach (Expense theExpense in results)
-                        {
-                            toReturn.Expenses.Add(theExpense);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    toReturn.ErrorCode = (int)System.Net.HttpStatusCode.Forbidden;
-                    toReturn.StatusMessage = ex.Message;
-                    toReturn.Expenses = new List<Expense>();
-                    return StatusCode((int)System.Net.HttpStatusCode.Forbidden, toReturn);
-                }
-            }
-            return Ok(toReturn);
+            //        toReturn.ErrorCode = (int)System.Net.HttpStatusCode.OK;
+            //        toReturn.StatusMessage = "Ok";
+            //        toReturn.Expenses = new List<Expense>();
+            //        if (!(results is null))
+            //        {
+            //            foreach (Expense theExpense in results)
+            //            {
+            //                toReturn.Expenses.Add(theExpense);
+            //            }
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        toReturn.ErrorCode = (int)System.Net.HttpStatusCode.Forbidden;
+            //        toReturn.StatusMessage = ex.Message;
+            //        toReturn.Expenses = new List<Expense>();
+            //        return StatusCode((int)System.Net.HttpStatusCode.Forbidden, toReturn);
+            //    }
+            //}
+            //return Ok(toReturn);
         }
     }
 }

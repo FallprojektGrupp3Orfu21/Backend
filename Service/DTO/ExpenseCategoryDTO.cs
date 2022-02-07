@@ -1,4 +1,4 @@
-﻿namespace Service
+﻿namespace Service.DTO
 {
     public class ExpenseCategoryDTO
     {
