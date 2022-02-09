@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Service.DTO;
-
+using DAL.Models;
 
 namespace Service
 {
     public class RecipientService
     {
-        public bool CreateRecipient(string userName, string recipientName)
+
+        public bool CreateRecipient(string userName, string recipientName, string recipientCity, int recipientId, )
         {
             using (var context = new EconomiqContext())
             {
@@ -20,11 +21,11 @@ namespace Service
                     throw new Exception("No user with this username.");
                 }
 
-                var newRecipient = new RecipientDTO { Name = recipientName, City = recipientCity, Id = recipientId, UserNavId = user.Id };
+                var newRecipient = new RecipientDTO { serName = userName, Name = recipientName, City = recipientCity, Id = recipientId, UserNavId = user.Id };
 
-                if(user.UserRecipientNav == null)
+                if(user.RecipientNav == null)
                 {
-                    user.UserRecipientNav = new List<Recipient> { newRecipient }
+                    user.RecipientNav = new List<Recipient> { newRecipient };
                 }
                 else
                 {

@@ -16,6 +16,8 @@ namespace DAL.Models
         public List<Expense>? ExpensesNav { get; set; }
         //For User
         public List<User>? UserNav { get; set; }
+        //For recipient
+        public List<Recipient>? RecipientNav { get; set; }
 
 
 

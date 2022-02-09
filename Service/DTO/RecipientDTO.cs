@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.Models;
 
 namespace Service.DTO
 {
-    internal class RecipientDTO
+    public class RecipientDTO
     {
         public int Id { get; set; }
 

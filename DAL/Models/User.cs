@@ -28,5 +28,7 @@ namespace DAL.Models
         //Email
         public List<Email> Emails { get; set; }
         public bool IsLoggedIn {get; set;}
+        //For recipients
+        public List<Recipient>? RecipientNav { get; set; }
     }
 }

@@ -48,7 +48,12 @@ namespace DAL.Models
             modelbuilder.Entity<ExpenseCategory>()
                 .HasMany(ec => ec.UserNav)
                 .WithMany(u => u.ExpensesCategoryNav);
-                
+            modelbuilder.Entity<Recipient>()
+                .HasOne(ur => ur.UserNav)
+                .WithMany(re => re.RecipientNav)
+                .HasForeignKey(e => e.UserNavId)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
 
             modelbuilder.Seed();
