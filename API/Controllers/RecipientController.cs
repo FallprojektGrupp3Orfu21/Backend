@@ -1,12 +1,57 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Service;
+using Service.DTO;
+using Service.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace API.Controllers
 {
+
+    [Route("api/")]
+    [ApiController]
     public class RecipientController : ControllerBase
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+            private UserService _userService;
+            private RecipientService _recipientService;
+            public RecipientController()
+            { 
+               _userService = new UserService();
+               _recipientService = new RecipientService()
+            }
+            [HttpPost("createRecipient")]
+            public IActionResult CreateRecipient([FromBody] RecipientDTO recipientDTO)
+            {
+            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);   
+            var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
+            if (!_userService.DoesUserExist(credentials[0])){
+                return BadRequest("Invalid Username");
+            }
+            else if (_userService.IsUserLoggedIn(credentials[0], credentials[1]))
+            {
+                try
+                {
+                    _recipientService.CreateRecipient(credentials[0], recipientDTO);
+                    return Ok(recipientDTO);
+                }
+
+                catch (Exception err)
+                {
+                    return BadRequest(err.Message);
+                }
+            }
+            else
+            {
+                return BadRequest("User not logged in");
+            }
+            
+            }
+
+
     }
 }
