@@ -11,7 +11,7 @@ namespace Service
     public class RecipientService
     {
 
-        public bool CreateRecipient(string userName, string recipientName, string recipientCity, int recipientId, )
+        public bool CreateRecipient(string userName, string recipientName, string recipientCity, int recipientId)
         {
             using (var context = new EconomiqContext())
             {
@@ -20,34 +20,31 @@ namespace Service
                 {
                     throw new Exception("No user with this username.");
                 }
+                var newRecipient = new Recipient
+                {
+                    Id = recipientId,
+                    Name = recipientName,
+                    City = recipientCity,
+                };
 
-                var newRecipient = new RecipientDTO { serName = userName, Name = recipientName, City = recipientCity, Id = recipientId, UserNavId = user.Id };
-
-                if(user.RecipientNav == null)
+                if (user.RecipientNav == null)
                 {
                     user.RecipientNav = new List<Recipient> { newRecipient };
                 }
-                else
-                {
-                    user.UserRecipientNav.Add(newRecipient);
-                }
+
+                user.RecipientNav.Add(newRecipient);
+
                 try
                 {
                     context.SaveChanges();
                     return true;
                 }
-
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
-
-
-
-
-
+       
         }
-
-        
-
-
-
     }
 }

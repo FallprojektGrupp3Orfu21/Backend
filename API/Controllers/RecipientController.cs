@@ -22,7 +22,7 @@ namespace API.Controllers
             public RecipientController()
             { 
                _userService = new UserService();
-               _recipientService = new RecipientService()
+            _recipientService = new RecipientService();
             }
             [HttpPost("createRecipient")]
             public IActionResult CreateRecipient([FromBody] RecipientDTO recipientDTO)
@@ -36,7 +36,7 @@ namespace API.Controllers
             {
                 try
                 {
-                    _recipientService.CreateRecipient(credentials[0], recipientDTO);
+                    _recipientService.CreateRecipient(credentials[0], recipientDTO.Name, recipientDTO.City, recipientDTO.Id.Value);
                     return Ok(recipientDTO);
                 }
 
