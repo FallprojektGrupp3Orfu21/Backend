@@ -1,14 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Service;
 using Service.DTO;
 using Service.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -26,11 +20,12 @@ namespace API.Controllers
 
 
         [HttpPost("createExpenseCategory")]
-        public IActionResult CreateExpenseCategory([FromBody] ExpenseCategoryDTO expenseCategoryDTO) 
+        public IActionResult CreateExpenseCategory([FromBody] ExpenseCategoryDTO expenseCategoryDTO)
         {
             var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
             var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
-            if (!_userService.DoesUserExist(credentials[0])){
+            if (!_userService.DoesUserExist(credentials[0]))
+            {
                 return BadRequest("Invalid Username");
             }
             else if (_userService.IsUserLoggedIn(credentials[0], credentials[1]))
@@ -50,7 +45,7 @@ namespace API.Controllers
             {
                 return BadRequest("User not logged in");
             }
-            
+
 
         }
 

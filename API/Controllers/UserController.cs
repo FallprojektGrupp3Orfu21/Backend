@@ -1,11 +1,8 @@
-﻿using DAL.Models;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO;
 using Service.Models;
 using System.Net.Http.Headers;
-using System.Text;
 
 namespace API.Controllers
 {
@@ -77,7 +74,7 @@ namespace API.Controllers
         public IActionResult GetExpenses()
         {
             return Ok();
-            
+
             //var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
             //var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
             //var toReturn = new GetExpenseDTO();

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DAL.Models
+﻿namespace DAL.Models
 {
     public class Email
     {
         int Id { get; set; }
-        [System.ComponentModel.DataAnnotations.EmailAddress] 
+        [System.ComponentModel.DataAnnotations.EmailAddress]
         public String Mail { get; set; }
-       
+
         //Navigational Properties
         public User UserNav { get; set; }
         public int UserNavId { get; set; }

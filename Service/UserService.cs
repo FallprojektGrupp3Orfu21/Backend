@@ -1,10 +1,5 @@
 ﻿using DAL.Models;
 using Service.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.Models
 {
@@ -101,7 +96,7 @@ namespace Service.Models
         }
         private bool DoesPasswordMatch(string username, string password)
         {
-            using(var context = new EconomiqContext())
+            using (var context = new EconomiqContext())
             {
                 var user = context.Users.Where(user => user.UserName == username).FirstOrDefault();
                 return (user.Password == password);
@@ -129,14 +124,14 @@ namespace Service.Models
 
         public bool LogoutUser(string userName, string password)
         {
-            using(var context = new EconomiqContext())
+            using (var context = new EconomiqContext())
             {
                 var user = context.Users.Where(user => user.UserName == userName).FirstOrDefault();
-                if(user is null)
+                if (user is null)
                 {
                     throw new Exception("Invalid username");
                 }
-                else if(!IsUserLoggedIn(userName, password))
+                else if (!IsUserLoggedIn(userName, password))
                 {
                     throw new Exception("User not logged in");
                 }
@@ -169,9 +164,9 @@ namespace Service.Models
         }
         public bool DoesUserExist(string userName)
         {
-            using(var context = new EconomiqContext())
+            using (var context = new EconomiqContext())
             {
-                return (context.Users.Where(user => user.UserName == userName) !=  null); 
+                return (context.Users.Where(user => user.UserName == userName) != null);
             }
         }
     }

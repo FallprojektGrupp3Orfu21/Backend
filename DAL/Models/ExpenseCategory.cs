@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Models
 {
@@ -10,7 +8,7 @@ namespace DAL.Models
         public string CategoryName { get; set; }
         [DataType(DataType.Date)]
         public DateTime CreationDate { get; set; }
-        
+
         //Navigational Properties
         //For Expenses
         public List<Expense>? ExpensesNav { get; set; }
