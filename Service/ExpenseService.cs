@@ -1,5 +1,7 @@
 ﻿using DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using Service.DTO;
+using Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +13,12 @@ namespace Service
     public class ExpenseService
     {
         private ExpenseCategoryService _expenseCategoryService;
+        private UserService _userService;
         public ExpenseService()
         {
             _expenseCategoryService = new ExpenseCategoryService();
+            _userService = new UserService();
+
         }
         public bool AddExpense(ExpenseDTO expense, string userName)
         {
@@ -34,22 +39,22 @@ namespace Service
                         _expenseCategoryService.CreateExpenseCategory(userName, expense.CategoryName);
                         category = context.ExpensesCategory.Where(c => c.CategoryName.ToLower() == expense.CategoryName.ToLower()).FirstOrDefault();
                     }
-                    catch 
+                    catch
                     {
                         throw new Exception("Something Went Wrong Here");
-                    } 
+                    }
                 }
                 //Length Check for title/comment
-                if(expense.Title.Length > 50)
+                if (expense.Title.Length > 50)
                 {
                     throw new Exception("Title Too Long (Needs to be less than 50 characters)");
                 }
                 //Creates the expense and adds it to the user (creates list ifs the first expense on the user)
                 DateTime expenseDate = DateTime.Parse(expense.ExpenseDate);
                 DateTime creationDate = DateTime.Now;
-                var newExpense = new Expense { Amount = expense.Amount, CreationDate = creationDate, ExpenseDate = expenseDate, Comment = expense.Title, UserNavId = user.Id, CategoryNavId = category.Id};
-                
-                if(user.UserExpensesNav == null)
+                var newExpense = new Expense { Amount = expense.Amount, CreationDate = creationDate, ExpenseDate = expenseDate, Comment = expense.Title, UserNavId = user.Id, CategoryNavId = category.Id };
+
+                if (user.UserExpensesNav == null)
                 {
                     user.UserExpensesNav = new List<Expense> { newExpense };
                 }
@@ -68,5 +73,31 @@ namespace Service
                 }
             }
         }
+
+        public List<GetExpenseDTO> GetAllExpensesByUsername(string Username)
+        {
+            List<GetExpenseDTO> listToReturn = new List<GetExpenseDTO>();
+
+            using (var context = new EconomiqContext())
+            {
+
+
+
+                var user = context.Users.Include(e => e.UserExpensesNav).FirstOrDefault(x => x.UserName == Username);
+                var expenses = user.UserExpensesNav.ToList();
+
+
+                foreach (var expense in expenses)
+                {
+                    listToReturn.Add(new GetExpenseDTO { Amount = expense.Amount, Title = expense.Comment, ExpenseDate = expense.ExpenseDate });
+
+                }
+                return listToReturn;
+
+
+            }
+        }
+
+
     }
 }

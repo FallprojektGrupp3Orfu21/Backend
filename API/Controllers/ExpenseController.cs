@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DAL.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 using Service.DTO;
@@ -14,10 +15,12 @@ namespace API.Controllers
     {
         private UserService _userService;
         private ExpenseService _expenseService;
+       
         public ExpenseController()
         {
             _expenseService = new ExpenseService();
             _userService = new UserService();
+            
         }
 
         [HttpPost("createExpense")]
@@ -36,6 +39,36 @@ namespace API.Controllers
                 {
                     _expenseService.AddExpense(expenseDTO, credentials[0]);
                     return Ok(expenseDTO);
+                }
+
+                catch (Exception err)
+                {
+                    return BadRequest(err.Message);
+                }
+            }
+            else
+            {
+                return BadRequest("User not logged in");
+            }
+
+        }
+        [HttpGet("expenses")]
+        public IActionResult GetExpenses()
+        {
+
+            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
+            var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
+            if (!_userService.DoesUserExist(credentials[0]))
+            {
+                return BadRequest("Invalid Username");
+            }
+            else if (_userService.IsUserLoggedIn(credentials[0], credentials[1]))
+            {
+                try
+                {
+                    var listToReturn = _expenseService.GetAllExpensesByUsername(credentials[0]);
+                   
+                    return Ok(listToReturn); // Lägg till objektet i return
                 }
 
                 catch (Exception err)

@@ -11,9 +11,11 @@ namespace Service.Models
     public class UserService
     {
         private ExpenseCategoryService _categoryService;
+        private GetExpenseDTO _expenseDTO;
         public UserService()
         {
             _categoryService = new ExpenseCategoryService();
+            _expenseDTO = new GetExpenseDTO();
         }
 
         private int _minimumPasswordLength = 8;
@@ -99,7 +101,7 @@ namespace Service.Models
             }
             return true;
         }
-        private bool DoesPasswordMatch(string username, string password)
+        public bool DoesPasswordMatch(string username, string password)
         {
             using(var context = new EconomiqContext())
             {
@@ -107,25 +109,7 @@ namespace Service.Models
                 return (user.Password == password);
             }
         }
-        public List<Expense> GetAllExpensesByUsername(string Username, string Password)
-        {
-            return new List<Expense>();
-            //try
-            //{
-            //    if (!DoesPasswordMatch(Username, Password))
-            //    {
-            //        throw new Exception("Invalid Username or Password");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex; 
-            //}
-            //using(var context = new EconomiqContext())
-            //{
-            //    return context.Users.Where(user => user.UserName == Username).FirstOrDefault().UserExpensesNav;   
-            //}
-        }
+        
 
         public bool LogoutUser(string userName, string password)
         {

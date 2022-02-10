@@ -9,8 +9,8 @@ namespace Service.DTO
 {
     public class GetExpenseDTO
     {
-        //public int ErrorCode { get; set; }
-        //public string StatusMessage { get; set; }
-        //public List<Expense> Expenses { get; set; }
+        public decimal Amount { get; set; }
+        public DateTime ExpenseDate { get; set; }
+        public string? Title { get; set; }
     }
 }
