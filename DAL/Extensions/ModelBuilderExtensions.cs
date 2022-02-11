@@ -7,9 +7,6 @@ namespace DAL.Extensions
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            var r1 = new Recipient() { Name = "ICA", City = "Nora", Id = 1 };
-            var r2 = new Recipient() { Name = "Coop", City = "Morgongåva", Id = 2 };
-            modelBuilder.Entity<Recipient>().HasData(r1, r2);
 
             var u1 = new User() { Id = 1, UserName = "JuliaH", Fname = "Julia", Lname = "Hook", Password = "Testing123", Gender = "Female", City = "Orebro", CreationDate = DateTime.Now };
             var u2 = new User() { Id = 2, UserName = "AlexV", Fname = "Alexander", Lname = "Volonen", Password = "Testing234", Gender = "Male", City = "Orebro", CreationDate = DateTime.Now };
@@ -40,7 +37,9 @@ namespace DAL.Extensions
             var r2 = new Recipient() { Id = 2, Name = "H&M", City = "Stockholm" };
             var r3 = new Recipient() { Id = 3, Name = "Alfred", City = "Göteborg" };
             var r4 = new Recipient() { Id = 4, Name = "Hanna", City = "Örebro" };
-            modelBuilder.Entity<Recipient>().HasData(r1, r2, r3, r4);
+            var r5 = new Recipient() { Id = 5, Name = "ICA", City = "Nora" };
+            var r6 = new Recipient() { Id = 6, Name = "Coop", City = "Morgongåva" };
+            modelBuilder.Entity<Recipient>().HasData(r1, r2, r3, r4, r5, r6);
 
 
             var e1 = new Expense() { Id = 1, Amount = 25, Comment = "Glass", CategoryNavId = 2, CreationDate = DateTime.Now, ExpenseDate = DateTime.Now, UserNavId = 1 };
