@@ -1,10 +1,5 @@
 ﻿using DAL.Models;
 using Service.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service
 {
@@ -34,22 +29,22 @@ namespace Service
                         _expenseCategoryService.CreateExpenseCategory(userName, expense.CategoryName);
                         category = context.ExpensesCategory.Where(c => c.CategoryName.ToLower() == expense.CategoryName.ToLower()).FirstOrDefault();
                     }
-                    catch 
+                    catch
                     {
                         throw new Exception("Something Went Wrong Here");
-                    } 
+                    }
                 }
                 //Length Check for title/comment
-                if(expense.Title.Length > 50)
+                if (expense.Title.Length > 50)
                 {
                     throw new Exception("Title Too Long (Needs to be less than 50 characters)");
                 }
                 //Creates the expense and adds it to the user (creates list ifs the first expense on the user)
                 DateTime expenseDate = DateTime.Parse(expense.ExpenseDate);
                 DateTime creationDate = DateTime.Now;
-                var newExpense = new Expense { Amount = expense.Amount, CreationDate = creationDate, ExpenseDate = expenseDate, Comment = expense.Title, UserNavId = user.Id, CategoryNavId = category.Id};
-                
-                if(user.UserExpensesNav == null)
+                var newExpense = new Expense { Amount = expense.Amount, CreationDate = creationDate, ExpenseDate = expenseDate, Comment = expense.Title, UserNavId = user.Id, CategoryNavId = category.Id };
+
+                if (user.UserExpensesNav == null)
                 {
                     user.UserExpensesNav = new List<Expense> { newExpense };
                 }

@@ -1,6 +1,4 @@
-﻿using DAL.Models;
-
-namespace Service.DTO
+﻿namespace Service.DTO
 {
 
     public class ExpenseDTO
