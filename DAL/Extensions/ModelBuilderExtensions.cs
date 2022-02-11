@@ -35,9 +35,14 @@ namespace DAL.Extensions
             var ec3 = new ExpenseCategory() { Id = 3, CategoryName = "Transport", CreationDate = DateTime.Now };
             var ec4 = new ExpenseCategory() { Id = 4, CategoryName = "Clothing", CreationDate = DateTime.Now };
             var ec5 = new ExpenseCategory() { Id = 5, CategoryName = "Entertainment", CreationDate = DateTime.Now };
-
-
             modelBuilder.Entity<ExpenseCategory>().HasData(ec, ec2, ec3, ec4, ec5);
+
+            var r1 = new Recipient() { Id = 1, Name = "ICA", City = "Örebro" };
+            var r2 = new Recipient() { Id = 2, Name = "H&M", City = "Stockholm" };
+            var r3 = new Recipient() { Id = 3, Name = "Alfred", City = "Göteborg" };
+            var r4 = new Recipient() { Id = 4, Name = "Hanna", City = "Örebro" };
+            modelBuilder.Entity<Recipient>().HasData(r1, r2, r3, r4);
+
 
             var e1 = new Expense() { Id = 1, Amount = 25, Comment = "Glass", CategoryNavId = 2, CreationDate = DateTime.Now ,ExpenseDate = DateTime.Now , UserNavId = 1};
             modelBuilder.Entity<Expense>().HasData(e1);
