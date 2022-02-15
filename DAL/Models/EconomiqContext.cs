@@ -41,10 +41,10 @@ namespace DAL.Models
                 .HasForeignKey(e => e.UserNavId)
                 .OnDelete(DeleteBehavior.NoAction);
             //Does Below Work?
-            //modelbuilder.Entity<User>()
-            //    .HasMany(e=>e.UserExpensesNav)
-            //    .WithOne(u=>u.UserNav)
-            //    .OnDelete(DeleteBehavior.Cascade);
+            modelbuilder.Entity<User>()
+                .HasMany(e => e.UserExpensesNav)
+                .WithOne(u => u.UserNav)
+                .OnDelete(DeleteBehavior.Cascade);
             modelbuilder.Entity<Expense>()
                 .HasOne(e => e.CategoryNav)
                 .WithMany(e => e.ExpensesNav)
