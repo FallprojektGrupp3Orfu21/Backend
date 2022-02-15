@@ -83,13 +83,13 @@ namespace Service
 
 
 
-                var user = context.Users.Include(e => e.UserExpensesNav).FirstOrDefault(x => x.UserName == Username);
+                var user = context.Users.Include(e => e.UserExpensesNav).ThenInclude(e=>e.CategoryNav).FirstOrDefault(x => x.UserName == Username);
                 var expenses = user.UserExpensesNav.ToList();
 
 
                 foreach (var expense in expenses)
                 {
-                    listToReturn.Add(new GetExpenseDTO { Amount = expense.Amount, Title = expense.Comment, ExpenseDate = expense.ExpenseDate });
+                    listToReturn.Add(new GetExpenseDTO { Amount = expense.Amount, Title = expense.Comment, ExpenseDate = expense.ExpenseDate, categoryName = expense.CategoryNav.CategoryName });
 
                 }
                 return listToReturn;
