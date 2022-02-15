@@ -8,5 +8,16 @@
         public string Name { get; set; }
 
         public string City { get; set; }
+
+
+
+        //Nav properties
+
+        public int UserNavId { get; set; }
+        public User? UserNav { get; set; }
+
+
+
+
     }
 }

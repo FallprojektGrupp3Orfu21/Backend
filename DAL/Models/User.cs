@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Models
 {
@@ -24,9 +19,11 @@ namespace DAL.Models
         //For Expense
         public List<Expense>? UserExpensesNav { get; set; }
         //For ExpenseCategory
-        public List<ExpenseCategory>? ExpensesCategoryNav { get; set;}
+        public List<ExpenseCategory>? ExpensesCategoryNav { get; set; }
         //Email
         public List<Email> Emails { get; set; }
-        public bool IsLoggedIn {get; set;}
+        public bool IsLoggedIn { get; set; }
+        //For recipients
+        public List<Recipient>? RecipientNav { get; set; }
     }
 }
