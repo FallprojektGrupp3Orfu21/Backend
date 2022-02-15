@@ -1,11 +1,13 @@
 ﻿using DAL.Models;
+using Microsoft.EntityFrameworkCore;
+using Service.DTO;
 
 namespace Service
 {
     public class RecipientService
     {
 
-        public bool CreateRecipient(string userName, string recipientName, string recipientCity, int recipientId)
+        public bool CreateRecipient(string userName, string recipientName, string recipientCity)
         {
             using (var context = new EconomiqContext())
             {
@@ -16,7 +18,6 @@ namespace Service
                 }
                 var newRecipient = new Recipient
                 {
-                    Id = recipientId,
                     Name = recipientName,
                     City = recipientCity,
                 };
@@ -40,5 +41,27 @@ namespace Service
             }
 
         }
+
+        public List<RecipientDTO> GetAllRecipients(string Username)
+        {
+            List<RecipientDTO> listToReturn = new List<RecipientDTO>();
+
+            using (var context = new EconomiqContext())
+            {
+                var user = context.Users.Include(e => e.RecipientNav).FirstOrDefault(x => x.UserName == Username);
+                var recipients = user.RecipientNav.ToList();
+
+
+                foreach (var recipient in recipients)
+                {
+                    listToReturn.Add(new RecipientDTO { Name = recipient.Name, City = recipient.City });
+
+                }
+                return listToReturn;
+
+
+            }
+        }
+
     }
 }

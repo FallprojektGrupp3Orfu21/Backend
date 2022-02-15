@@ -33,12 +33,12 @@ namespace DAL.Extensions
             var ec5 = new ExpenseCategory() { Id = 5, CategoryName = "Entertainment", CreationDate = DateTime.Now };
             modelBuilder.Entity<ExpenseCategory>().HasData(ec, ec2, ec3, ec4, ec5);
 
-            var r1 = new Recipient() { Id = 1, Name = "ICA", City = "Örebro" };
-            var r2 = new Recipient() { Id = 2, Name = "H&M", City = "Stockholm" };
-            var r3 = new Recipient() { Id = 3, Name = "Alfred", City = "Göteborg" };
-            var r4 = new Recipient() { Id = 4, Name = "Hanna", City = "Örebro" };
-            var r5 = new Recipient() { Id = 5, Name = "ICA", City = "Nora" };
-            var r6 = new Recipient() { Id = 6, Name = "Coop", City = "Morgongåva" };
+            var r1 = new Recipient() { Id = 1, Name = "ICA", City = "Örebro" , UserNavId = 1};
+            var r2 = new Recipient() { Id = 2, Name = "H&M", City = "Stockholm" , UserNavId = 5 };
+            var r3 = new Recipient() { Id = 3, Name = "Alfred", City = "Göteborg" , UserNavId = 3 };
+            var r4 = new Recipient() { Id = 4, Name = "Hanna", City = "Örebro" , UserNavId = 4 };
+            var r5 = new Recipient() { Id = 5, Name = "ICA", City = "Nora" , UserNavId = 7 };
+            var r6 = new Recipient() { Id = 6, Name = "Coop", City = "Morgongåva" , UserNavId = 7 };
             modelBuilder.Entity<Recipient>().HasData(r1, r2, r3, r4, r5, r6);
 
 

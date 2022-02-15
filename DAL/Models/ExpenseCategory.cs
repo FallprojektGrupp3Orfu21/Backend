@@ -15,7 +15,6 @@ namespace DAL.Models
         //For User
         public List<User>? UserNav { get; set; }
         //For recipient
-        public List<Recipient>? RecipientNav { get; set; }
 
 
 
