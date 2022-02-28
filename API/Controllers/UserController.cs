@@ -16,7 +16,7 @@ namespace API.Controllers
 
         private UserService _us = new UserService();
         [EnableCors("corsapp")]
-        [HttpPost("create")]
+        [HttpPost("createUser")]
         public IActionResult CreateUser([FromBody] UserDTO userDTO)
         {
             try
