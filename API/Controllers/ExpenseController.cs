@@ -51,7 +51,7 @@ namespace API.Controllers
             }
 
         }
-        [HttpGet("expenses")]
+        [HttpGet("listExpense")]
         public IActionResult GetExpenses()
         {
 
