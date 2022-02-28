@@ -1,13 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Service;
+using Service.DTO;
 using Service.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -25,21 +20,19 @@ namespace API.Controllers
 
 
         [HttpPost("createExpenseCategory")]
-        public IActionResult CreateExpenseCategory([FromBody] ExpenseCategoryDTO expenseCategoryDTO) 
+        public IActionResult CreateExpenseCategory([FromBody] ExpenseCategoryDTO expenseCategoryDTO)
         {
             var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
-            var credentialsAsbase64 = header.Parameter;
-            byte[] data = Convert.FromBase64String(credentialsAsbase64);
-            string decodedString = Encoding.UTF8.GetString(data);
-            var splitString = decodedString.Split(":");
-            var Username = splitString[0];
-            var Password = splitString[1];
-
-            if (_userService.IsUserLoggedIn(Username, Password))
+            var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
+            if (!_userService.DoesUserExist(credentials[0]))
+            {
+                return BadRequest("Invalid Username");
+            }
+            else if (_userService.IsUserLoggedIn(credentials[0], credentials[1]))
             {
                 try
                 {
-                    _categoryService.CreateExpenseCategory(Username, expenseCategoryDTO.CategoryName);
+                    _categoryService.CreateExpenseCategory(credentials[0], expenseCategoryDTO.CategoryName);
                     return Ok(expenseCategoryDTO);
                 }
 
@@ -52,7 +45,7 @@ namespace API.Controllers
             {
                 return BadRequest("User not logged in");
             }
-            
+
 
         }
 

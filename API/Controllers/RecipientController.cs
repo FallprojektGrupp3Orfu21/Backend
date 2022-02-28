@@ -1,6 +1,4 @@
-﻿using DAL.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Service;
 using Service.DTO;
 using Service.Models;
@@ -8,36 +6,33 @@ using System.Net.Http.Headers;
 
 namespace API.Controllers
 {
+
     [Route("api/")]
     [ApiController]
-    public class ExpenseController : ControllerBase
+    public class RecipientController : ControllerBase
     {
         private UserService _userService;
-        private ExpenseService _expenseService;
-       
-        public ExpenseController()
+        private RecipientService _recipientService;
+        public RecipientController()
         {
-            _expenseService = new ExpenseService();
             _userService = new UserService();
-            
+            _recipientService = new RecipientService();
         }
-
-        [HttpPost("createExpense")]
-        public IActionResult CreateExpense([FromBody] ExpenseDTO expenseDTO)
+        [HttpPost("createRecipient")]
+        public IActionResult CreateRecipient([FromBody] RecipientDTO recipientDTO)
         {
-            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
+            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
             var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
             if (!_userService.DoesUserExist(credentials[0]))
             {
                 return BadRequest("Invalid Username");
             }
-
             else if (_userService.IsUserLoggedIn(credentials[0], credentials[1]))
             {
                 try
                 {
-                    _expenseService.AddExpense(expenseDTO, credentials[0]);
-                    return Ok(expenseDTO);
+                    _recipientService.CreateRecipient(credentials[0], recipientDTO.Name, recipientDTO.City);
+                    return Ok(recipientDTO);
                 }
 
                 catch (Exception err)
@@ -51,8 +46,8 @@ namespace API.Controllers
             }
 
         }
-        [HttpGet("listExpense")]
-        public IActionResult GetExpenses()
+        [HttpGet("listRecipients")]
+        public IActionResult GetRecipients()
         {
 
             var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
@@ -65,8 +60,8 @@ namespace API.Controllers
             {
                 try
                 {
-                    var listToReturn = _expenseService.GetAllExpensesByUsername(credentials[0]);
-                   
+                    var listToReturn = _recipientService.GetAllRecipients(credentials[0]);
+
                     return Ok(listToReturn); // Lägg till objektet i return
                 }
 
@@ -81,5 +76,7 @@ namespace API.Controllers
             }
 
         }
+
+
     }
 }

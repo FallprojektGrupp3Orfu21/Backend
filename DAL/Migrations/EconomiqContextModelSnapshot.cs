@@ -17,7 +17,7 @@ namespace DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -118,8 +118,8 @@ namespace DAL.Migrations
                             Amount = 25m,
                             CategoryNavId = 2,
                             Comment = "Glass",
-                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7673),
-                            ExpenseDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7675),
+                            CreationDate = new DateTime(2022, 2, 15, 11, 50, 44, 895, DateTimeKind.Local).AddTicks(4698),
+                            ExpenseDate = new DateTime(2022, 2, 15, 11, 50, 44, 895, DateTimeKind.Local).AddTicks(4703),
                             UserNavId = 1
                         });
                 });
@@ -148,31 +148,31 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             CategoryName = "Rent",
-                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7655)
+                            CreationDate = new DateTime(2022, 2, 15, 11, 50, 44, 895, DateTimeKind.Local).AddTicks(4599)
                         },
                         new
                         {
                             Id = 2,
                             CategoryName = "Food",
-                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7657)
+                            CreationDate = new DateTime(2022, 2, 15, 11, 50, 44, 895, DateTimeKind.Local).AddTicks(4607)
                         },
                         new
                         {
                             Id = 3,
                             CategoryName = "Transport",
-                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7658)
+                            CreationDate = new DateTime(2022, 2, 15, 11, 50, 44, 895, DateTimeKind.Local).AddTicks(4612)
                         },
                         new
                         {
                             Id = 4,
                             CategoryName = "Clothing",
-                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7660)
+                            CreationDate = new DateTime(2022, 2, 15, 11, 50, 44, 895, DateTimeKind.Local).AddTicks(4616)
                         },
                         new
                         {
                             Id = 5,
                             CategoryName = "Entertainment",
-                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7661)
+                            CreationDate = new DateTime(2022, 2, 15, 11, 50, 44, 895, DateTimeKind.Local).AddTicks(4620)
                         });
                 });
 
@@ -184,9 +184,66 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserNavId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("UserNavId");
+
                     b.ToTable("Recipients");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "Örebro",
+                            Name = "ICA",
+                            UserNavId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City = "Stockholm",
+                            Name = "H&M",
+                            UserNavId = 5
+                        },
+                        new
+                        {
+                            Id = 3,
+                            City = "Göteborg",
+                            Name = "Alfred",
+                            UserNavId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            City = "Örebro",
+                            Name = "Hanna",
+                            UserNavId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            City = "Nora",
+                            Name = "ICA",
+                            UserNavId = 7
+                        },
+                        new
+                        {
+                            Id = 6,
+                            City = "Morgongåva",
+                            Name = "Coop",
+                            UserNavId = 7
+                        });
                 });
 
             modelBuilder.Entity("DAL.Models.User", b =>
@@ -236,7 +293,7 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             City = "Orebro",
-                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7512),
+                            CreationDate = new DateTime(2022, 2, 15, 11, 50, 44, 895, DateTimeKind.Local).AddTicks(4205),
                             Fname = "Julia",
                             Gender = "Female",
                             IsLoggedIn = false,
@@ -248,7 +305,7 @@ namespace DAL.Migrations
                         {
                             Id = 2,
                             City = "Orebro",
-                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7540),
+                            CreationDate = new DateTime(2022, 2, 15, 11, 50, 44, 895, DateTimeKind.Local).AddTicks(4262),
                             Fname = "Alexander",
                             Gender = "Male",
                             IsLoggedIn = false,
@@ -260,7 +317,7 @@ namespace DAL.Migrations
                         {
                             Id = 3,
                             City = "Orebro",
-                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7542),
+                            CreationDate = new DateTime(2022, 2, 15, 11, 50, 44, 895, DateTimeKind.Local).AddTicks(4268),
                             Fname = "Stefan",
                             Gender = "Male",
                             IsLoggedIn = false,
@@ -272,7 +329,7 @@ namespace DAL.Migrations
                         {
                             Id = 4,
                             City = "Orebro",
-                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7544),
+                            CreationDate = new DateTime(2022, 2, 15, 11, 50, 44, 895, DateTimeKind.Local).AddTicks(4272),
                             Fname = "Winnie",
                             Gender = "Female",
                             IsLoggedIn = false,
@@ -284,7 +341,7 @@ namespace DAL.Migrations
                         {
                             Id = 5,
                             City = "Orebro",
-                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7545),
+                            CreationDate = new DateTime(2022, 2, 15, 11, 50, 44, 895, DateTimeKind.Local).AddTicks(4277),
                             Fname = "Eric",
                             Gender = "Male",
                             IsLoggedIn = false,
@@ -296,7 +353,7 @@ namespace DAL.Migrations
                         {
                             Id = 6,
                             City = "Fjugesta",
-                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7549),
+                            CreationDate = new DateTime(2022, 2, 15, 11, 50, 44, 895, DateTimeKind.Local).AddTicks(4282),
                             Fname = "Anders",
                             Gender = "Male",
                             IsLoggedIn = false,
@@ -308,7 +365,7 @@ namespace DAL.Migrations
                         {
                             Id = 7,
                             City = "Orebro",
-                            CreationDate = new DateTime(2022, 2, 2, 14, 43, 53, 937, DateTimeKind.Local).AddTicks(7551),
+                            CreationDate = new DateTime(2022, 2, 15, 11, 50, 44, 895, DateTimeKind.Local).AddTicks(4287),
                             Fname = "Peter",
                             Gender = "Male",
                             IsLoggedIn = false,
@@ -535,12 +592,23 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Models.User", "UserNav")
                         .WithMany("UserExpensesNav")
                         .HasForeignKey("UserNavId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CategoryNav");
 
                     b.Navigation("Recipient");
+
+                    b.Navigation("UserNav");
+                });
+
+            modelBuilder.Entity("DAL.Models.Recipient", b =>
+                {
+                    b.HasOne("DAL.Models.User", "UserNav")
+                        .WithMany("RecipientNav")
+                        .HasForeignKey("UserNavId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("UserNav");
                 });
@@ -568,6 +636,8 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Models.User", b =>
                 {
                     b.Navigation("Emails");
+
+                    b.Navigation("RecipientNav");
 
                     b.Navigation("UserExpensesNav");
                 });

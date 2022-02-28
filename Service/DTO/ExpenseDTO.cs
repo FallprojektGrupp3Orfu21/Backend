@@ -1,5 +1,6 @@
-﻿namespace Service
+﻿namespace Service.DTO
 {
+
     public class ExpenseDTO
     {
         public string Title { get; set; }

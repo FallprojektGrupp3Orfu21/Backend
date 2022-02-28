@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using DAL.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.DTO;
@@ -12,9 +13,10 @@ namespace API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+
         private UserService _us = new UserService();
         [EnableCors("corsapp")]
-        [HttpPost("create")]
+        [HttpPost("createUser")]
         public IActionResult CreateUser([FromBody] UserDTO userDTO)
         {
             try
@@ -23,46 +25,47 @@ namespace API.Controllers
                 return Ok(userDTO);
             }
 
-           catch (Exception err)
+            catch (Exception err)
             {
                 return BadRequest(err.Message);
-            }  
+            }
         }
         [EnableCors("corsapp")]
         [HttpPost("login")]
         public IActionResult LoginUser()
         {
             var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
-            var credentialsAsbase64 = header.Parameter;
-            byte[] data = Convert.FromBase64String(credentialsAsbase64);
-            string decodedString = Encoding.UTF8.GetString(data);
-            var splitString = decodedString.Split(":");
-            var Username = splitString[0];
-            var Password = splitString[1];
-            try
+            var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
+            if (!_us.DoesUserExist(credentials[0]))
             {
-                _us.LoginUser(Username, Password);
+                return BadRequest("Invalid Username");
             }
-            catch(Exception ex)
+            else
             {
-                return BadRequest(ex.Message);
+                try
+                {
+                    _us.LoginUser(credentials[0], credentials[1]);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+                return Ok("User Logged In");
             }
-            return Ok("User Logged In"); 
         }
         [EnableCors("corsapp")]
         [HttpPost("logout")]
         public IActionResult LogoutUser()
         {
             var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
-            var credentialsAsbase64 = header.Parameter;
-            byte[] data = Convert.FromBase64String(credentialsAsbase64);
-            string decodedString = Encoding.UTF8.GetString(data);
-            var splitString = decodedString.Split(":");
-            var Username = splitString[0];
-            var Password = splitString[1];
+            var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
+            if (!_us.DoesUserExist(credentials[0]))
+            {
+                return BadRequest("Invalid Username");
+            }
             try
             {
-                _us.LogoutUser(Username, Password);
+                _us.LogoutUser(credentials[0], credentials[1]);
             }
             catch (Exception err)
             {
@@ -70,5 +73,8 @@ namespace API.Controllers
             }
             return Ok("User logged out");
         }
+        
+        
     }
 }
+

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL.Extensions;
+﻿using DAL.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Models
@@ -40,6 +35,11 @@ namespace DAL.Models
                 .WithMany(e => e.UserExpensesNav)
                 .HasForeignKey(e => e.UserNavId)
                 .OnDelete(DeleteBehavior.NoAction);
+            //Does Below Work?
+            modelbuilder.Entity<User>()
+                .HasMany(e => e.UserExpensesNav)
+                .WithOne(u => u.UserNav)
+                .OnDelete(DeleteBehavior.Cascade);
             modelbuilder.Entity<Expense>()
                 .HasOne(e => e.CategoryNav)
                 .WithMany(e => e.ExpensesNav)
@@ -48,7 +48,12 @@ namespace DAL.Models
             modelbuilder.Entity<ExpenseCategory>()
                 .HasMany(ec => ec.UserNav)
                 .WithMany(u => u.ExpensesCategoryNav);
-                
+            modelbuilder.Entity<Recipient>()
+                .HasOne(ur => ur.UserNav)
+                .WithMany(re => re.RecipientNav)
+                .HasForeignKey(e => e.UserNavId)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
 
             modelbuilder.Seed();
