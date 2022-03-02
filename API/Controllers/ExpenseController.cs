@@ -25,18 +25,11 @@ namespace API.Controllers
         [HttpPost("createExpense")]
         public IActionResult CreateExpense([FromBody] ExpenseDTO expenseDTO)
         {
-            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
-            var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
-            if (!_userService.DoesUserExist(credentials[0]))
-            {
-                return BadRequest("Invalid Username");
-            }
-
-            else if (_userService.IsUserLoggedIn(credentials[0], credentials[1]))
-            {
+            var request = Request;
                 try
                 {
-                    _expenseService.AddExpense(expenseDTO, credentials[0]);
+                    AuthenticationHandler.CheckUser(request, _userService);
+                    _expenseService.AddExpense(expenseDTO, UserNameAndPassword.GetUserNameAndPassword(request)[0]);
                     return Ok(expenseDTO);
                 }
 
@@ -44,29 +37,17 @@ namespace API.Controllers
                 {
                     return BadRequest(err.Message);
                 }
-            }
-            else
-            {
-                return BadRequest("User not logged in");
-            }
-
         }
         [HttpGet("listExpense")]
         public IActionResult GetExpenses()
         {
+                var request = Request; 
 
-            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
-            var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
-            if (!_userService.DoesUserExist(credentials[0]))
-            {
-                return BadRequest("Invalid Username");
-            }
-            else if (_userService.IsUserLoggedIn(credentials[0], credentials[1]))
-            {
                 try
                 {
-                    var listToReturn = _expenseService.GetAllExpensesByUsername(credentials[0]);
-                   
+                    AuthenticationHandler.CheckUser(request,_userService);
+                    var credentials = UserNameAndPassword.GetUserNameAndPassword(request);
+                    var listToReturn = _expenseService.GetAllExpensesByUsername(credentials[0]);                   
                     return Ok(listToReturn); // Lägg till objektet i return
                 }
 
@@ -74,12 +55,8 @@ namespace API.Controllers
                 {
                     return BadRequest(err.Message);
                 }
-            }
-            else
-            {
-                return BadRequest("User not logged in");
-            }
-
+           
+           
         }
-    }
-}
+      }
+   }

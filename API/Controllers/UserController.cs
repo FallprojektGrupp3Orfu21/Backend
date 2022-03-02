@@ -34,47 +34,43 @@ namespace API.Controllers
         [HttpPost("login")]
         public IActionResult LoginUser()
         {
-            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
-            var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
-            if (!_us.DoesUserExist(credentials[0]))
-            {
-                return BadRequest("Invalid Username");
-            }
-            else
-            {
+            //var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
+            //var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
                 try
-                {
+                {   
+                    var request = Request; 
+                    AuthenticationHandler.CheckUser(request, _us);
+                    var credentials = UserNameAndPassword.GetUserNameAndPassword(request);
                     _us.LoginUser(credentials[0], credentials[1]);
+                    return Ok("User Logged In");
                 }
                 catch (Exception ex)
                 {
                     return BadRequest(ex.Message);
                 }
-                return Ok("User Logged In");
-            }
+            
         }
         [EnableCors("corsapp")]
         [HttpPost("logout")]
         public IActionResult LogoutUser()
         {
-            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
-            var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
-            if (!_us.DoesUserExist(credentials[0]))
-            {
-                return BadRequest("Invalid Username");
-            }
+            //var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
+            //var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
+            var request = Request;   
+            var credentials = UserNameAndPassword.GetUserNameAndPassword(request);    
             try
             {
+         
+                AuthenticationHandler.CheckUser(request,_us);
                 _us.LogoutUser(credentials[0], credentials[1]);
+                return Ok("User logged out");
             }
             catch (Exception err)
             {
                 return BadRequest(err.Message);
             }
-            return Ok("User logged out");
+            
         }
-        
-        
     }
 }
 

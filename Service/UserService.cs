@@ -12,7 +12,6 @@ namespace Service.Models
             _categoryService = new ExpenseCategoryService();
             _expenseDTO = new GetExpenseDTO();
         }
-
         private int _minimumPasswordLength = 8;
         private bool IsPasswordOk(string password)
         {
@@ -67,62 +66,44 @@ namespace Service.Models
         {
             using (var context = new EconomiqContext())
             {
-                var user = context.Users.Where(user => user.UserName == userName).FirstOrDefault();
-                if (user is null)
+                var user = context.Users.Where(x => x.UserName == userName).FirstOrDefault();
+                user.IsLoggedIn = true;
+                try
                 {
-                    throw new Exception("Invalid Username");
+                    context.SaveChanges();
+                    return true;
                 }
-                if (IsUserLoggedIn(userName, password))
+                catch(Exception ex)
                 {
-                    throw new Exception("User is already logged in");
-                }
-                if (user.UserName == userName && user.Password == password)
-                {
-                    try
-                    {
-                        user.IsLoggedIn = true;
-                        context.SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
-
-                }
-                else
-                {
-                    throw new Exception("Invalid username or password");
+                    throw ex; 
                 }
             }
-            return true;
+
         }
+
+
         public bool DoesPasswordMatch(string username, string password)
         {
             using (var context = new EconomiqContext())
             {
                 var user = context.Users.Where(user => user.UserName == username).FirstOrDefault();
-                return (user.Password == password);
+                return (user.UserName == username);
             }
         }
-        
-
         public bool LogoutUser(string userName, string password)
         {
             using (var context = new EconomiqContext())
             {
                 var user = context.Users.Where(user => user.UserName == userName).FirstOrDefault();
-                if (user is null)
+                user.IsLoggedIn = false;
+                try
                 {
-                    throw new Exception("Invalid username");
-                }
-                else if (!IsUserLoggedIn(userName, password))
-                {
-                    throw new Exception("User not logged in");
-                }
-                else
-                {
-                    user.IsLoggedIn = false;
                     context.SaveChanges();
+                    return true;
+                }
+                catch(Exception ex)
+                {
+                    throw ex;
                 }
             }
             return true;
@@ -132,18 +113,7 @@ namespace Service.Models
             using (var context = new EconomiqContext())
             {
                 var user = context.Users.Where(user => user.UserName == userName).FirstOrDefault();
-                if (user == null)
-                {
-                    return false;
-                }
-                else if (user.UserName == userName && user.Password == password)
-                {
-                    return user.IsLoggedIn;
-                }
-                else
-                {
-                    return false;
-                }
+                return (user.UserName == userName);
             }
         }
         public bool DoesUserExist(string userName)

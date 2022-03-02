@@ -21,16 +21,11 @@ namespace API.Controllers
         [HttpPost("createRecipient")]
         public IActionResult CreateRecipient([FromBody] RecipientDTO recipientDTO)
         {
-            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
-            var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
-            if (!_userService.DoesUserExist(credentials[0]))
-            {
-                return BadRequest("Invalid Username");
-            }
-            else if (_userService.IsUserLoggedIn(credentials[0], credentials[1]))
-            {
-                try
+           try
                 {
+                    var request = Request; 
+                    AuthenticationHandler.CheckUser(request,_userService);
+                    var credentials = UserNameAndPassword.GetUserNameAndPassword(request);
                     _recipientService.CreateRecipient(credentials[0], recipientDTO.Name, recipientDTO.City);
                     return Ok(recipientDTO);
                 }
@@ -39,28 +34,17 @@ namespace API.Controllers
                 {
                     return BadRequest(err.Message);
                 }
-            }
-            else
-            {
-                return BadRequest("User not logged in");
-            }
-
         }
         [HttpGet("listRecipients")]
-        public IActionResult GetRecipients()
-        {
-
-            var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
-            var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
-            if (!_userService.DoesUserExist(credentials[0]))
-            {
-                return BadRequest("Invalid Username");
-            }
-            else if (_userService.IsUserLoggedIn(credentials[0], credentials[1]))
-            {
+        public IActionResult GetRecipients([FromQuery] string? searchString = null)
+        {   
+            var request = Request; 
+             
                 try
                 {
-                    var listToReturn = _recipientService.GetAllRecipients(credentials[0]);
+                    AuthenticationHandler.CheckUser(request,_userService);
+                    var credentials = UserNameAndPassword.GetUserNameAndPassword(request);
+                    var listToReturn = _recipientService.GetRecipients(credentials[0], credentials[1], searchString);
 
                     return Ok(listToReturn); // Lägg till objektet i return
                 }
@@ -69,14 +53,6 @@ namespace API.Controllers
                 {
                     return BadRequest(err.Message);
                 }
-            }
-            else
-            {
-                return BadRequest("User not logged in");
-            }
-
         }
-
-
     }
 }

@@ -41,27 +41,29 @@ namespace Service
             }
 
         }
-
-        public List<RecipientDTO> GetAllRecipients(string Username)
-        {
-            List<RecipientDTO> listToReturn = new List<RecipientDTO>();
-
-            using (var context = new EconomiqContext())
+            public List<RecipientDTO> GetRecipients(string username, string password, string? searchString = null)
             {
-                var user = context.Users.Include(e => e.RecipientNav).FirstOrDefault(x => x.UserName == Username);
-                var recipients = user.RecipientNav.ToList();
-
-
-                foreach (var recipient in recipients)
+                using(var context = new EconomiqContext())
                 {
-                    listToReturn.Add(new RecipientDTO { Name = recipient.Name, City = recipient.City });
 
+                int userId = context.Users.Where(user => user.UserName == username).FirstOrDefault().Id;
+                var recipients = context.Recipients.Where(rec => rec.UserNavId == userId);
+                if(searchString != null)
+                {
+                    recipients = recipients.Where(recipient => recipient.Name.ToLower().StartsWith(searchString.ToLower()));
                 }
-                return listToReturn;
-
-
+                var theRecipients = new List<RecipientDTO>();
+                foreach(var recipient in recipients)
+                {
+                    theRecipients.Add(new RecipientDTO
+                    {
+                        Name = recipient.Name,
+                        City = recipient.City
+                    });          
+                }
+                return theRecipients;
+                }
             }
-        }
 
     }
 }
