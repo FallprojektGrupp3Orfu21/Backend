@@ -13,8 +13,11 @@
 
         //Nav properties
 
+        //For User
         public int UserNavId { get; set; }
         public User? UserNav { get; set; }
+        //For Expense
+        public List<Expense>? ExpenseNav { get; set; }
 
 
 

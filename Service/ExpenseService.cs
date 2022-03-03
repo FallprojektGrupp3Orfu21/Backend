@@ -25,7 +25,8 @@ namespace Service
             using (var context = new EconomiqContext())
             {
                 //Gest the user by username
-                var user = context.Users.Where(user => user.UserName == userName).FirstOrDefault();
+                var user = context.Users.Where(user => user.UserName == userName).Include(r => r.RecipientNav).FirstOrDefault();
+                var recipient = user.RecipientNav.Where(rec => rec.Name == expense.RecipientName).FirstOrDefault();
                 if (user == null)
                 {
                     throw new Exception("No User with this Username.");
@@ -41,7 +42,7 @@ namespace Service
                     }
                     catch
                     {
-                        throw new Exception("Something Went Wrong Here");
+                        throw new Exception("Could not create missing Category");
                     }
                 }
                 //Length Check for title/comment
@@ -50,9 +51,9 @@ namespace Service
                     throw new Exception("Title Too Long (Needs to be less than 50 characters)");
                 }
                 //Creates the expense and adds it to the user (creates list ifs the first expense on the user)
-                DateTime expenseDate = DateTime.Parse(expense.ExpenseDate);
+                DateTime expenseDate = DateTime.Parse(expense.ExpenseDate).Date;
                 DateTime creationDate = DateTime.Now;
-                var newExpense = new Expense { Amount = expense.Amount, CreationDate = creationDate, ExpenseDate = expenseDate, Comment = expense.Title, UserNavId = user.Id, CategoryNavId = category.Id };
+                var newExpense = new Expense { Amount = expense.Amount, CreationDate = creationDate, ExpenseDate = expenseDate, Comment = expense.Title, UserNavId = user.Id, CategoryNavId = category.Id, RecipientNavId = recipient.Id };
 
                 if (user.UserExpensesNav == null)
                 {
