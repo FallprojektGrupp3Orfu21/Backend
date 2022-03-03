@@ -85,8 +85,6 @@ namespace Service
 
 
                 var user = context.Users.Include(e => e.UserExpensesNav).ThenInclude(e=>e.CategoryNav).Include(e => e.RecipientNav).FirstOrDefault(x => x.UserName == Username);
-                //var user2 = context.Users.Include(q => q.RecipientNav).FirstOrDefault(x => x.UserName == Username);
-                //var recipient = user2.RecipientNav.
                 var expenses = user.UserExpensesNav.ToList();
 
 
