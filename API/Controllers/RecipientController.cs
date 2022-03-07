@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using Service;
 using Service.DTO;
 using Service.Models;
@@ -46,6 +47,7 @@ namespace API.Controllers
             }
 
         }
+        [EnableCors("corsapp")]
         [HttpGet("listRecipients")]
         public IActionResult GetRecipients([FromQuery] string? searchString=null)
         {
