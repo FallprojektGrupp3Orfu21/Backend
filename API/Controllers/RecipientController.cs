@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using Service;
 using Service.DTO;
 using Service.Models;
@@ -46,10 +47,11 @@ namespace API.Controllers
             }
 
         }
+        [EnableCors("corsapp")]
         [HttpGet("listRecipients")]
-        public IActionResult GetRecipients()
+        public IActionResult GetRecipients([FromQuery] string? searchString=null)
         {
-
+            
             var header = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]); //This corresponds to using basic authorization in postman. Remember to turn "Enable SSL certificate verification off" under settings and select Type Basic Auth under Authorization  
             var credentials = UserNameAndPassword.GetUserNameAndPassword(header);
             if (!_userService.DoesUserExist(credentials[0]))
@@ -60,7 +62,7 @@ namespace API.Controllers
             {
                 try
                 {
-                    var listToReturn = _recipientService.GetAllRecipients(credentials[0]);
+                    var listToReturn = _recipientService.GetRecipients(credentials[0],searchString);
 
                     return Ok(listToReturn); // Lägg till objektet i return
                 }
