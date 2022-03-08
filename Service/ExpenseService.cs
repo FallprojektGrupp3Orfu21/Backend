@@ -90,7 +90,7 @@ namespace Service
 
                 foreach (var expense in expenses)
                 {
-                    listToReturn.Add(new GetExpenseDTO { Amount = expense.Amount, Title = expense.Comment, ExpenseDate = expense.ExpenseDate, categoryName = expense.CategoryNav.CategoryName, RecipientName = expense.RecipientNav.Name }) ;
+                    listToReturn.Add(new GetExpenseDTO { Amount = expense.Amount, Title = expense.Comment, ExpenseDate = expense.ExpenseDate.ToString("dd/MM/yyyy"), categoryName = expense.CategoryNav.CategoryName, RecipientName = expense.RecipientNav.Name }) ;
 
                 }
                 return listToReturn;
