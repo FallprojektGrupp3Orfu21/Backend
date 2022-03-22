@@ -7,10 +7,6 @@ namespace DAL.Models
         public int Id { get; set; }
         [DataType(DataType.Currency)]
         public decimal Amount { get; set; }
-
-        public Recipient? Recipient { get; set; }
-
-        [DataType(DataType.Date)]
         public DateTime ExpenseDate { get; set; }
         public DateTime CreationDate { get; set; }
 
@@ -24,5 +20,8 @@ namespace DAL.Models
         //For Category
         public int? CategoryNavId;
         public ExpenseCategory? CategoryNav { get; set; }
+        //For Recipient
+        public int? RecipientNavId { get; set; }
+        public Recipient? RecipientNav { get; set; }
     }
 }

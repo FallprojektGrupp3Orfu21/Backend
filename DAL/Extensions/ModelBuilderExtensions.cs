@@ -42,7 +42,7 @@ namespace DAL.Extensions
             modelBuilder.Entity<Recipient>().HasData(r1, r2, r3, r4, r5, r6);
 
 
-            var e1 = new Expense() { Id = 1, Amount = 25, Comment = "Glass", CategoryNavId = 2, CreationDate = DateTime.Now, ExpenseDate = DateTime.Now, UserNavId = 1 };
+            var e1 = new Expense() { Id = 1, Amount = 25, Comment = "Glass", CategoryNavId = 2, CreationDate = DateTime.Now, ExpenseDate = DateTime.Now.Date, UserNavId = 1 };
             modelBuilder.Entity<Expense>().HasData(e1);
 
             modelBuilder.Entity<ExpenseCategory>()

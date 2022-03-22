@@ -53,6 +53,11 @@ namespace DAL.Models
                 .WithMany(re => re.RecipientNav)
                 .HasForeignKey(e => e.UserNavId)
                 .OnDelete(DeleteBehavior.NoAction);
+            modelbuilder.Entity<Expense>()
+                .HasOne(re => re.RecipientNav)
+                .WithMany(ex => ex.ExpenseNav)
+                .HasForeignKey(e => e.RecipientNavId)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
 
