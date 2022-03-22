@@ -61,11 +61,7 @@ namespace Service
                         listToReturn.Add(new RecipientDTO { Id = recipient.Id, Name = recipient.Name, City = recipient.City});
                     }
                 }
-                return listToReturn;
-
-
             }
-        }
 
     }
 }

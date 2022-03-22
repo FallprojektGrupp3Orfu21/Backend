@@ -5,9 +5,9 @@ namespace API
 {
     public static class UserNameAndPassword
     {
-        public static List<String> GetUserNameAndPassword(AuthenticationHeaderValue header)
+        public static List<String> GetUserNameAndPassword(HttpRequest request)
         {
-            var credentialsAsbase64 = header.Parameter;
+            var credentialsAsbase64 =  AuthenticationHeaderValue.Parse(request.Headers["Authorization"]).Parameter;
             byte[] data = Convert.FromBase64String(credentialsAsbase64);
             string decodedString = Encoding.UTF8.GetString(data);
             var splitString = decodedString.Split(":");
