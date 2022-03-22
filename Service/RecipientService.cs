@@ -42,7 +42,7 @@ namespace Service
 
         }
 
-        public List<RecipientDTO> GetRecipients(string Username,string? SearchString = null)
+        public List<RecipientDTO> GetRecipients(string Username, string? SearchString = null)
         {
             List<RecipientDTO> listToReturn = new List<RecipientDTO>();
 
@@ -53,15 +53,18 @@ namespace Service
 
                 foreach (var recipient in recipients)
                 {
-                    if(SearchString == null) { 
-                    listToReturn.Add(new RecipientDTO { Id= recipient.Id, Name = recipient.Name, City = recipient.City });
+                    if (SearchString == null)
+                    {
+                        listToReturn.Add(new RecipientDTO { Id = recipient.Id, Name = recipient.Name, City = recipient.City });
                     }
                     else if (recipient.Name.ToLower().StartsWith(SearchString.ToLower()))
                     {
-                        listToReturn.Add(new RecipientDTO { Id = recipient.Id, Name = recipient.Name, City = recipient.City});
+                        listToReturn.Add(new RecipientDTO { Id = recipient.Id, Name = recipient.Name, City = recipient.City });
                     }
                 }
+                return listToReturn;
             }
 
+        }
     }
 }

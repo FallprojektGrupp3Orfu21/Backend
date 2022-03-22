@@ -46,7 +46,7 @@ namespace API.Controllers
                 {
                     AuthenticationHandler.CheckUser(request,_userService);
                     var credentials = UserNameAndPassword.GetUserNameAndPassword(request);
-                    var listToReturn = _recipientService.GetRecipients(credentials[0], credentials[1], searchString);
+                    var listToReturn = _recipientService.GetRecipients(credentials[0], searchString);
                     return Ok(listToReturn); // Lägg till objektet i return
                 }
 
