@@ -98,6 +98,44 @@ namespace Service
 
             }
         }
+        public List<GetExpenseDTO> GetFilteredList(FilterExpenseDTO filterDTO, string username)
+        {
+            List<GetExpenseDTO> listToReturn = new List<GetExpenseDTO>();
+
+            using (var context = new EconomiqContext())
+            {
+                var user = context.Users.Include(e => e.UserExpensesNav).ThenInclude(e => e.CategoryNav).Include(e => e.RecipientNav).FirstOrDefault(x => x.UserName == username);
+                var expenses = new List<Expense>();
+
+                switch (filterDTO.FilteredBy)
+                {
+                    case "HighestPrice":
+                        expenses = user.UserExpensesNav.OrderByDescending(e => e.Amount).ToList();
+                        break;
+                    case "LowestPrice":
+                        expenses = user.UserExpensesNav.OrderBy(e => e.Amount).ToList();
+                        break;
+                    case "Newest":
+                        expenses = user.UserExpensesNav.OrderByDescending(e => e.ExpenseDate).ToList();
+                        break;
+                    case "Oldest":
+                        expenses = user.UserExpensesNav.OrderBy(e => e.ExpenseDate).ToList();
+                        break;
+                    case "RecieverName":
+                        expenses = user.UserExpensesNav.OrderBy(e => e.RecipientNav.Name).ToList();
+                        break;
+                    default:
+                        expenses = user.UserExpensesNav.ToList();
+                        break;
+                }
+                foreach (var expense in expenses)
+                {
+                    listToReturn.Add(new GetExpenseDTO { Amount = expense.Amount, Title = expense.Comment, ExpenseDate = expense.ExpenseDate.ToString("dd/MM/yyyy"), categoryName = expense.CategoryNav.CategoryName, RecipientName = expense.RecipientNav.Name });
+
+                }
+                return listToReturn;
+            }
+        }
 
         
         

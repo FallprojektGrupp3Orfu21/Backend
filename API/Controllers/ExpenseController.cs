@@ -58,5 +58,24 @@ namespace API.Controllers
            
            
         }
-      }
+        [HttpGet("listFilteredExpenses")]
+        public IActionResult GetFilteredExpenses([FromBody] FilterExpenseDTO filterExpenseDTO)
+        {
+            var request = Request;
+
+            try
+            {
+                AuthenticationHandler.CheckUser(request, _userService);
+                var listToReturn = _expenseService.GetFilteredList(filterExpenseDTO, UserNameAndPassword.GetUserNameAndPassword(request)[0]);
+                return Ok(listToReturn);
+            }
+
+            catch (Exception err)
+            {
+                return BadRequest(err.Message);
+            }
+
+
+        }
+    }
    }
