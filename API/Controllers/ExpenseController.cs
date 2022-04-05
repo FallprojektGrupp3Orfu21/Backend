@@ -58,7 +58,7 @@ namespace API.Controllers
            
            
         }
-        [HttpGet("listFilteredExpenses")]
+        [HttpPost("listFilteredExpenses")]
         public IActionResult GetFilteredExpenses([FromBody] FilterExpenseDTO filterExpenseDTO)
         {
             var request = Request;
